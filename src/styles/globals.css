@@ -1,0 +1,308 @@
+/* width */
+
+::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #ff7533; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ff7533; 
+  }
+  .css-uwcd5u.SnackbarContainer-center{
+    top: 15%; 
+    left: 90%;
+  }
+  /* .css-1mn67p{
+    display: none !important ; 
+  }
+  .SnackbarItem-action{
+    display: none !important ; 
+  } 
+  .css-sc1xty {
+    display: none !important ; 
+  }  */
+  .numberVerifed{
+    display: flex  !important;
+    justify-content: center  !important;
+    margin-top: 0px  !important;
+    color: green;
+    font-weight: 600;
+
+    }
+  .menu-flags-button{
+    border: none !important ;
+    /* border-bottom: 0.7px solid #212B36 !important ; */
+    border-radius: 0 !important;
+    padding: 1px 3px !important;
+
+    }
+    .menu-flags-button span{
+     font-size: 13px  !important;
+     font-weight: 400  !important;
+      }
+    .menu-flags{
+      /* border-bottom: 3px solid red; */
+      top: 14px  !important;
+      right: 13px;
+      /* width: 10px !important ; */
+    }
+    .otpButton{
+     display: flex;
+     justify-content: center;
+    }
+
+  @media (max-width: 480px) {
+    .modal-box-address {
+      width: 80% !important ;
+    }
+    .dashboard_jobhistory_CardContent_responsive {
+      padding: 4px !important ;
+    }
+    .dashboard_jobPostForm_responsive{
+      flex-direction: column !important ;
+    }
+    .dashboardCards_CardContent_responsive{
+      padding: 24px !important ;
+    }
+    .dashboardSection_jobhistoryBox_responsive{
+      display: contents !important ;
+    }
+    .dashboard_jobhistoryBox_responsive{
+      display: flex !important ;
+      justify-content: space-evenly  !important;
+    }
+    .Customerdashboard_box_Stack_responsive{
+     flex-direction: column !important;
+     gap: 15px !important ;
+   }
+   .subscription_plan_box_stack_responsive{
+    padding-top: 200px !important ;
+  }
+   .dashboard_subscription_box_stack_responsive{
+   margin-top: 100px;
+  }
+   .DashboardSubscritption_Grid_stack_responsive{
+    flex-direction: column !important;
+  }
+
+
+   .subscribe_box_CardContent_responsive{
+    padding: 0px !important ;
+  }
+    /* .css-73e2r8-MuiFormControl-root-MuiTextField-root{
+       width: 11rem !important;
+    } */
+    .subscribe_TextBox_responsive{
+      width: 100% !important;
+   }
+    .suscribe_form_box_stack_responsive {
+      width: 100% !important;
+      padding: 5px !important;;
+      display: flex  !important; 
+      flex-direction: column   !important;  
+    align-items: stretch !important;
+    gap: 15px !important;
+    }
+    .Subscritption_box_stack_responsive{
+      left: 1rem  !important; 
+    }
+  
+    .css-mhwhpv{
+      top: 27rem  !important; 
+    }
+    .suscribe_box_stack_responsive{
+      display: flex  !important; 
+      flex-direction: column   !important;
+    }
+    .suscribe_box_grid_responsive{
+      display: flex  !important; 
+      flex-direction: column   !important;
+    }
+    .css-mcghr7-MuiButtonBase-root-MuiButton-root{
+      top: 1rem  !important; 
+    }
+    .css-15mit2o-MuiGrid-root>.MuiGrid-item {
+      max-width: 100%  !important;
+      flex-basis: 100%  !important;
+    }
+    .faqsPage_grid_responsive {
+      flex-direction: column !important;
+    }
+    /* .css-480o17-MuiGrid-root>.MuiGrid-item{
+      max-width: 100%  !important;
+      flex-basis: 100%  !important;
+    } */
+    .commonblog_grid_responsive{
+      max-width: 100%  !important;
+      flex-basis: 100%  !important;
+    }
+    .contact-session{
+      max-width: 100%  !important;
+      flex-basis: 100%  !important;
+    }
+
+   
+    /* .css-1jv2z0n-MuiStack-root{
+      display: contents  !important;
+    } */
+    .customerBid_box_stack_responsive{
+      display: contents  !important;
+    }
+    .css-a5rdam-MuiGrid-root{
+     flex-direction  : column  !important;
+    }
+    
+    
+    .flexDirection {
+      flex-direction  : row  !important;
+    }
+    .dashboard_box_grid_responsive {
+      flex-direction  : column  !important;
+    }
+    .css-zow5z4-MuiGrid-root  {
+      flex-direction  : column  !important;
+    }
+    .css-11lq3yg-MuiGrid-root {
+      flex-direction  : column  !important;
+    }
+    .css-1k7sk4d-MuiGrid-root {
+      margin-top  : 40px  !important;
+    }
+    .suscribeTable_box_stack_responsive{
+      /* flex-direction: row !important;;  */
+      gap: 20px !important;
+    }
+    .blog_details_box_stack_responsive{
+      left: 2% !important;
+    }
+    .blog_details_box_responsive{
+      width: 52px !important;
+    }
+    .blogdetails_stack_responsive{
+      width: 85px !important;
+    }
+    .blogdetailsviews_stack_responsive{
+      width: 110px !important;
+    }
+    /* .css-1cv9m5y-MuiStack-root{
+      flex-direction: column-reverse  !important;; 
+      gap: 20px !important;
+    } */
+    .dashboard_driverBid_Grid_responsive{
+      flex-direction: column !important;
+    }
+    .aboutSection_stack_responsive {
+      padding-right: 55px  !important;
+      justify-content: space-evenly !important;
+    }
+    .primaryHomePage_grid_responsive {
+      padding: 18px  !important;
+    }
+    .primaryHomePages_Card_responsive {
+      width: 370px  !important;
+      /* justify-content: space-evenly !important; */
+    }
+    .primaryHomeSection_grid_responsive {
+      flex-direction: column  !important;margin-left: 0px;
+      /* justify-content: space-evenly !important; */
+
+    }
+    .totaluser_typograhy_responsive {
+      display: flex;
+      flex-direction: column  !important;
+      /* justify-content: space-evenly !important; */
+
+    }
+}
+
+@media (max-width: 768px) {
+  .aboutSection_stack_responsive {
+    justify-content: space-evenly !important;
+  }
+  .headerNav_div_responsive {
+    display: flex !important;
+  }
+  .headerLinks_stack_responsive {
+    margin-top: 5px !important;
+   padding: 0px !important;
+  }
+  .headerNav_stack_responsive {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+    align-items: flex-end !important;
+
+   }
+  
+  .faqsPage_grid_responsive {
+    flex-direction: column !important;
+  }
+  .subscription_plan_box_stack_responsive{
+    padding-top: 200px !important ;
+  }
+  .Customerdashboard_box_Stack_responsive{
+    gap: 80px !important ;
+  }
+  /* .css-erfsbs-MuiGrid-root{
+    justify-content: space-around !important;
+ } */
+ .css-7ldjcq-MuiGrid-root>.MuiGrid-item{
+  display: contents !important;
+}
+.aboutUs_grid_responsive{
+  display: contents !important;
+}
+
+/* .suscribe_box_stack_responsive{
+  display: flex  !important; 
+  flex-direction: row   !important;
+} */
+.commonblog_grid_responsive{
+  max-width: 100%  !important;
+  flex-basis: 100%  !important;
+}
+/* .css-480o17-MuiGrid-root>.MuiGrid-item{
+  max-width: 100%  !important;
+  flex-basis: 100%  !important;
+} */
+.css-16pdiy5-MuiContainer-root {
+  padding-top: 55px  !important; 
+}
+.dashboard_box_grid_responsive {
+  flex-direction  : column  !important;
+}
+.css-zow5z4-MuiGrid-root  {
+  flex-direction  : column  !important;
+}
+.css-a5rdam-MuiGrid-root{
+  flex-direction  : column  !important;
+ }
+ .css-11lq3yg-MuiGrid-root {
+  flex-direction  : column  !important;
+}
+.css-1k7sk4d-MuiGrid-root {
+  margin-top  : 40px  !important;
+  width: 100% !important;
+}
+.css-1u7bwi5-MuiStack-root  {
+   padding-top  : 80px  !important;
+}
+.css-1u7bwi5-MuiStack-root>:not(style):not(style) {
+  width: 75% !important;
+}
+.mapWidth .widthMapChange {
+  width: 100% !important;
+}
+}
