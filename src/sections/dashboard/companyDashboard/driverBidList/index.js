@@ -443,7 +443,7 @@ const BidList = () => {
                                           fontSize={16}
                                           fontWeight={600}
                                         >
-                                          ${elem?.ammount}
+                                          <Iconify icon="bi:currency-pound" />{elem?.ammount}
                                         </Typography>
                                       </Box>
                                       <Stack direction="row" spacing={1}>
@@ -505,7 +505,7 @@ const BidList = () => {
                                       fontSize={14}
                                       fontWeight={400}
                                     >
-                                      Job Success Rate :
+                                      Job Success Rate1 :
                                     </Typography>
                                   </Box>
                                   <Box>

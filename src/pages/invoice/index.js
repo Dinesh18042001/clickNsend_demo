@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import ViewInvoiceModal from "../Modals/Viewinvoicemodal";
+import ViewInvoiceModal from "../Modals/Viewinvoicemodal";
 import {
   Typography,
   Table,
