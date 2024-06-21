@@ -1,8 +1,6 @@
 import { PrimaryWebLayout } from "@/layout";
 import AuthGuard from "@/auth/AuthGuard";
-// import ViewJobHistory from "@/sections/dashboard/customercompany/viewJobHistory";
-import ViewJobHistory from "@/sections/dashboard/companyDashboard/viewJobHistory";
-
+//import ViewJobHistory from "@/sections/dashboard/customercompany/viewJobHistory";
 import SubscriptionDialog from "@/components/dialog/subscriptionDialog";
 
 const ViewJobPage = () => {
