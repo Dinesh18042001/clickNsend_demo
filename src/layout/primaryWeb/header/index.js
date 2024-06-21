@@ -344,23 +344,30 @@ const Header = (props) => {
                     Dashboard
                   </Typography>
                 ) : (
+                null
+                ))}
+
+
+                {isAuthenticated &&
+                (user?.user_type == "company" &&
+                user?.profile?.company_type === "driver" ? (
                   <Typography
                     sx={{
                       mx: 1,
                       borderBottom: (theme) =>
-                        router.asPath.startsWith("/dashboard")
+                        router.asPath.startsWith("/dashboard/company/driver/list")
                           ? "2px solid"
                           : "none",
 
                       color: (theme) =>
-                        router.asPath.startsWith("/dashboard")
+                        router.asPath.startsWith("/dashboard/company/driver/list")
                           ? theme.palette.primary.main
                           : theme.palette.text.primary,
                       borderColor: (theme) =>
-                        router.asPath.startsWith("/dashboard")
+                        router.asPath.startsWith("/dashboard/company/driver/list")
                           ? theme.palette.primary.main
                           : theme.palette.text.primary,
-                      borderBottom: router.asPath.startsWith("/dashboard")
+                      borderBottom: router.asPath.startsWith("/dashboard/company/driver/list")
                         ? "2px solid"
                         : "",
                       ...theme.typography.subtitle2,
@@ -370,14 +377,51 @@ const Header = (props) => {
                     component={Link}
                     href={
                       user?.user_type === "driver"
-                        ? `/dashboard/${user?.user_type}/active_jobs`
-                        : `/dashboard/${user?.user_type}/job_history`
+                        ? `/dashboard/company/driver/list`
+                        : `/dashboard/company/driver/list`
+                    }
+                  >
+                    Dashboard
+                  </Typography>
+                ) : (
+                 null
+                ))}
+
+                {isAuthenticated &&
+                (user?.user_type == "customer" && (
+                  <Typography
+                    sx={{
+                      mx: 1,
+                      borderBottom: (theme) =>
+                        router.asPath.startsWith("/dashboard/company/driver/list")
+                          ? "2px solid"
+                          : "none",
+
+                      color: (theme) =>
+                        router.asPath.startsWith("/dashboard/company/driver/list")
+                          ? theme.palette.primary.main
+                          : theme.palette.text.primary,
+                      borderColor: (theme) =>
+                        router.asPath.startsWith("/dashboard/company/driver/list")
+                          ? theme.palette.primary.main
+                          : theme.palette.text.primary,
+                      borderBottom: router.asPath.startsWith("/dashboard/company/driver/list")
+                        ? "2px solid"
+                        : "",
+                      ...theme.typography.subtitle2,
+                      textDecoration: "none",
+                      fontSize: "1rem",
+                    }}
+                    component={Link}
+                    href={
+                      user?.user_type === "driver"
+                        ? `/dashboard/company/driver/list`
+                        : `/dashboard/company/driver/list`
                     }
                   >
                     Dashboard
                   </Typography>
                 ))}
-
                 
 
               {/* {isAuthenticated &&
@@ -438,7 +482,7 @@ const Header = (props) => {
                     Job list
                   </Typography>
                 ) : null)}
-              {isAuthenticated &&
+              {/* {isAuthenticated &&
                 (user?.user_type == "company" &&
                 user?.profile?.company_type === "customer" ? (
                   <Typography
@@ -466,7 +510,7 @@ const Header = (props) => {
                     Active Jobs
                   </Typography>
                 ) : null)}
-
+                {console.log(theme)} */}
               {isAuthenticated &&
                 (user?.user_type == "company" &&
                 user?.profile?.company_type === "customer" ? (
@@ -476,22 +520,22 @@ const Header = (props) => {
                       pr: 1,
                       borderBottom: (theme) =>
                         router.asPath ===
-                        `/dashboard/customer/job_post_form/create`
+                        `/dashboard/${user?.user_type}/job_post_form/create`
                           ? "2px solid"
                           : "none",
                       color: (theme) =>
                         router.asPath ===
-                        `/dashboard/customer/job_post_form/create`
+                        `/dashboard/${user?.user_type}/job_post_form/create`
                           ? theme.palette.primary.main
                           : theme.palette.text.primary,
                       borderColor: (theme) =>
                         router.asPath ===
-                        `/dashboard/customer/job_post_form/create`
+                        `/dashboard/${user?.user_type}/job_post_form/create`
                           ? theme.palette.primary.main
                           : theme.palette.text.primary,
                       borderBottom:
                         router.asPath ===
-                        `/dashboard/customer/job_post_form/create`
+                        `/dashboard/${user?.user_type}/job_post_form/create`
                           ? "2px solid"
                           : "",
                       ...theme.typography.subtitle2,
@@ -499,7 +543,7 @@ const Header = (props) => {
                       fontSize: "1rem",
                     }}
                     component={Link}
-                    href={`/dashboard/customer/job_post_form/create`}
+                    href={`/dashboard/${user?.user_type}/job_post_form/create`}
                   >
                     Add Jobs
                   </Typography>

@@ -16,7 +16,6 @@ const CustomerCompanyDashboard = () => {
   const router = useRouter();
   return (
     <React.Fragment>
-
       <div style={{marginTop:"150px", marginBottom:"80px"}}>
       <Container sx={{ my: 2, }}>
         <Stack spacing={4}>
@@ -73,13 +72,12 @@ const CustomerCompanyDashboard = () => {
                           pulvinar.
                         </Typography>
                         <Box>
-                          <Button
+                          {/* <Button
                             sx={{ fontSize: "14px" }}
                             variant="contained"
                             onClick={() =>
                               router.push(
-                                // "/dashboard/customer/job_posted"
-                                "customer_company/job_posted"
+                                "/dashboard/company/job_posted"
                               )
                             }
                             color="dark"
@@ -93,8 +91,8 @@ const CustomerCompanyDashboard = () => {
                             //   },
                             // }}
                           >
-                            POST YOUR JOB
-                          </Button>
+                            POST YOUR JOB 
+                          </Button> */}
                         </Box>
                       </Stack>
                     </Stack>

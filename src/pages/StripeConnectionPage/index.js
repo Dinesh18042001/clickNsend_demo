@@ -223,16 +223,16 @@ const StripePage = () => {
         <TableContainer sx={{ mt: 5 }}>
          <Table>
            <TableHead>
-             <TableRow>
+             {/* <TableRow>
                <TableCell>Name</TableCell>
                <TableCell>Email</TableCell>
                <TableCell>Status</TableCell>
                <TableCell>Action</TableCell>
-             </TableRow>
+             </TableRow> */}
            </TableHead>
            <TableBody>
              {/* Example row */}
-             <TableRow>
+             {/* <TableRow>
                <TableCell>John Doe</TableCell>
                <TableCell>john@example.com</TableCell>
                <TableCell>Primary</TableCell>
@@ -255,7 +255,7 @@ const StripePage = () => {
                     <MenuItem onClick={handleClose}>Make Primary</MenuItem>
                   </Menu>
                 </TableCell>
-              </TableRow>
+              </TableRow> */}
               {/* Add more rows as needed */}
             </TableBody>
           </Table>

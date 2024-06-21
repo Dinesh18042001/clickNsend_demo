@@ -1365,7 +1365,7 @@ const DashboardJobRequest = () => {
 
                   return (
                     <React.Fragment key={index}>
-                      {isCheckedDocument ? (
+                      {!isCheckedDocument ? (
                         <Grid container rowSpacing={0}>
                           <Grid item md={12}>
                             <Card

@@ -133,7 +133,7 @@ const DashboardCard = ({ jobPost }) => {
                   </Box>
                   <Box>
                     <Typography variant="h6" fontWeight={300}>
-                      JOB POSTED
+                      JOB POSTED 12
                     </Typography>
                     <Typography variant="h4" textAlign="center">
                       {data?.length}

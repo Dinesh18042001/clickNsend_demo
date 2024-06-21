@@ -21,10 +21,12 @@ import find from "lodash/find";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
-const CustomerCompanyCard = ({ jobPost }) => {
+const DashboardCard = ({ jobPost }) => {
   const router = useRouter();
   const { user } = useAuthContext();
   const dispatch = useDispatch();
+  const [companyData, setCompanyData] = React.useState([]);
+
   const {
     jobPost: { pageCount, data, page, pageSize },
     jobHistory,
@@ -88,7 +90,16 @@ const CustomerCompanyCard = ({ jobPost }) => {
   React.useEffect(() => {
     fetchdata();
   }, []);
-
+  React.useEffect(() => {
+    if (data) {
+      const filteredData = data.filter(compData => 
+        compData.created_by === "company" && compData.user_id === user.id
+      );
+      setCompanyData(filteredData);
+    }
+  }, [data, user]);  
+  console.log(companyData?.length,"companyData")
+  
   return (
     <React.Fragment>
       <Box sx={{ mt: 4 }}>
@@ -98,17 +109,17 @@ const CustomerCompanyCard = ({ jobPost }) => {
             <Card
               sx={{
                 backgroundColor:
-                  router.pathname === "/dashboard/customer/job_posted"
+                  router.pathname === "/dashboard/company/job_posted"
                     ? "#145365"
                     : "#145365",
                 border: "1px solid #145365",
                 color:
-                  router.pathname === "/dashboard/customer/job_posted"
+                  router.pathname === "/dashboard/company/job_posted"
                     ? "#fff"
                     : "#fff",
                 cursor: "pointer",
               }}
-              onClick={() => router.push("/dashboard/customer/job_posted")}
+              onClick={() => router.push("/dashboard/company/job_posted")}
             >
               <CardContent className='dashboardCards_CardContent_responsive'>
                 <Stack
@@ -120,7 +131,7 @@ const CustomerCompanyCard = ({ jobPost }) => {
                   <Box
                     sx={{
                       backgroundColor: (theme) =>
-                        router.pathname === "/dashboard/customer/job_posted"
+                        router.pathname === "/dashboard/company/job_posted"
                           ? "#246678"
                           : "#246678",
                     }}
@@ -137,7 +148,7 @@ const CustomerCompanyCard = ({ jobPost }) => {
                       JOB POSTED
                     </Typography>
                     <Typography variant="h4" textAlign="center">
-                      {data?.length}
+                      {companyData?.length}
                     </Typography>
                   </Box>
                 </Stack>
@@ -148,17 +159,17 @@ const CustomerCompanyCard = ({ jobPost }) => {
             <Card
               sx={{
                 backgroundColor:
-                  router.pathname === "/dashboard/customer/job_history"
+                  router.pathname === "/dashboard/company/job_history"
                     ? "#FD9B3D"
                     : "#FD9B3D",
                 border: "1px solid #FD9B3D",
                 color:
-                  router.pathname === "/dashboard/customer/job_history"
+                  router.pathname === "/dashboard/company/job_history"
                     ? "#fff"
                     : "#fff",
                 cursor: "pointer",
               }}
-              onClick={() => router.push("/dashboard/customer/job_history")}
+              onClick={() => router.push("/dashboard/company/job_history")}
             >
               <CardContent>
                 <Stack
@@ -170,7 +181,7 @@ const CustomerCompanyCard = ({ jobPost }) => {
                   <Box
                     sx={{
                       backgroundColor: (theme) =>
-                        router.pathname === "/dashboard/customer/job_history"
+                        router.pathname === "/dashboard/company/job_history"
                           ? "#ffa54e"
                           : "#ffa54e",
                     }}
@@ -202,7 +213,7 @@ const CustomerCompanyCard = ({ jobPost }) => {
                 color: (theme) => theme.palette.common.white,
                 cursor: "pointer",
               }}
-              onClick={() => router.push("/dashboard/customer/job_delete")}
+              onClick={() => router.push("/dashboard/company/job_delete")}
             >
               <CardContent>
                 <Stack
@@ -243,17 +254,17 @@ const CustomerCompanyCard = ({ jobPost }) => {
             <Card
               sx={{
                 backgroundColor:
-                  router.pathname === "/dashboard/customer/subscription"
+                  router.pathname === "/dashboard/company/subscription"
                     ? "#FECA3C"
                     : "#FECA3C",
                 border: "1px solid #FECA3C",
                 color:
-                  router.pathname === "/dashboard/customer/subscription"
+                  router.pathname === "/dashboard/company/subscription"
                     ? "#fff"
                     : "#fff",
                 cursor: "pointer",
               }}
-              onClick={() => router.push("/dashboard/customer/subscription")}
+              onClick={() => router.push("/dashboard/company/subscription")}
             >
               <CardContent>
                 <Stack
@@ -265,7 +276,7 @@ const CustomerCompanyCard = ({ jobPost }) => {
                   <Box
                     sx={{
                       backgroundColor: (theme) =>
-                        router.pathname === "/dashboard/customer/subscription"
+                        router.pathname === "/dashboard/company/subscription"
                           ? "#ffd768"
                           : "#ffd768",
                     }}
@@ -299,4 +310,4 @@ const CustomerCompanyCard = ({ jobPost }) => {
   );
 };
 
-export default CustomerCompanyCard;
+export default DashboardCard;

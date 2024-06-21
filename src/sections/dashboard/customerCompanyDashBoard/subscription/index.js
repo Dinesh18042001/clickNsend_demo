@@ -38,7 +38,7 @@ const SubscriptionsPage = () => {
 
 
 
-  const fetchdata = async (type = "customer") => {
+  const fetchdata = async (type = "company") => {
     setLoading(true);
     const statusShowPlan = 1 ;
     await axiosInstance
@@ -148,7 +148,7 @@ const SubscriptionsPage = () => {
               component={Link}
               sx={{ textDecoration: "none" }}
               color="common.white"
-              href="/dashboard/customer/job_posted"
+              href="/dashboard/company/job_posted"
             >
               Dashboard
             </Box>

@@ -37,7 +37,7 @@ const initialState = {
 };
 
 const slice = createSlice({
-  name: "company",
+  name: "companyJob",
   initialState,
   reducers: {
     // START LOADING

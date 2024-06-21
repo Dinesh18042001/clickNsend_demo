@@ -1,24 +1,26 @@
 import AuthGuard from "@/auth/AuthGuard";
 import SubscriptionDialog from "@/components/dialog/subscriptionDialog";
 import { PrimaryWebLayout } from "@/layout";
-import TrackJob from "@/sections/dashboard/companyDashboard/trackJob";
+import JobDelete from "@/sections/dashboard/customerCompanyDashBoard/job_delete";
 import { useFormik } from "formik";
 
-const StartJobPage = () => {
+const JobHistoryPage = () => {
   const formik = useFormik({
     initialValues: {
-     
+      month: 0,
     },
   });
+
+  console.log("formikformik", formik);
   return (
     <AuthGuard>
-      <TrackJob formik={formik} />
+      <JobDelete formik={formik} />
       <SubscriptionDialog />
     </AuthGuard>
   );
 };
 
-StartJobPage.getLayout = function getLayout(page) {
+JobHistoryPage.getLayout = function getLayout(page) {
   return <PrimaryWebLayout>{page}</PrimaryWebLayout>;
 };
-export default StartJobPage;
+export default JobHistoryPage;

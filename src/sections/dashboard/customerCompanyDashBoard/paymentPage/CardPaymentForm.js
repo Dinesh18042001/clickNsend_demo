@@ -132,7 +132,7 @@ const CardPaymentForm = ({ paymentDetails, setShowPayment }) => {
       };
       try {
         const CustomerResponse = await axiosInstance.post(
-          `api/auth/payment/customer-invoice-payment`,
+          `api/auth/payment/company-invoice-payment`,
           customerInitialValues
         );
         if (CustomerResponse?.status === 200) {

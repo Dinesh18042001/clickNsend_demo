@@ -166,7 +166,7 @@ const SubscriptionsPage = () => {
                   {data &&
                     data?.length > 0 &&
                     data.map((elem, index) => {
-                      const isActivePlan = activePlan.plan_id === plan.id;
+                      const isActivePlan = activePlan?.plan_id === elem.id;
                       return (
                         <Grid item md={4} key={index}>
                           <Card
@@ -309,7 +309,7 @@ const SubscriptionsPage = () => {
                                       fullWidth
                                       variant="contained"
                                       sx={{ px: 5 }}
-                                      onClick={() => handleCheckout(plan)}
+                                      onClick={() => handleCheckout(elem)}
                                     >
                                       Get Started
                                     </Button>

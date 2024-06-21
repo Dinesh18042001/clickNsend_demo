@@ -25,24 +25,18 @@ import {
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";  import Alert from '@mui/material/Alert';
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-const ViewJobHistory = () => {
+const JobDeleteDetail = () => {
   const router = useRouter();
   const { user } = useAuthContext();
   const { enqueueSnackbar } = useSnackbar();
   const { id } = router.query;
   const [jobDetail, setJobDetail] = useState([]);
   const [ratings, setRatings] = useState([]);
-  const [ratingById, setRatingById] = useState([]);
-
   const [reviewOpen, setReviewOpen] = React.useState(false);
   const handleReviewOpen = (id) => setReviewOpen(id);
   const handleReviewClose = () => setReviewOpen(false);
-
-  const [reviewIdOpen, setReviewIdOpen] = React.useState(false);
-  const handleReviewIdOpen = (id) => setReviewIdOpen(id);
-  const handleReviewIdClose = () => setReviewIdOpen(false);
 
   const [addressOpen, setAddressOpen] = useState(false);
   const handleAddressOpen = (address) => setAddressOpen(address);
@@ -110,17 +104,16 @@ const ViewJobHistory = () => {
   });
 
   const getJobDetail = async () => {
-    // setLoader(true);
     await axiosInstance
       .get(`api/auth/jobs/view/${id}`)
       .then((response) => {
         if (response?.status === 200) {
           setJobDetail(response?.data?.view_data);
-          setRatings(response?.data?.view_data?.ratings);
+          setRatings(response?.data?.view_data?.job?.ratings);
         }
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log("RatignList", error);
       });
   };
   // End
@@ -135,96 +128,7 @@ const ViewJobHistory = () => {
     formik.setFieldValue("job_id", id);
   }, [user, user?.id, id]);
 
-  const handleEditRating = async (ratings) => {
-    const customerRating = ratings.find((rating) => rating.given_by === "customer");
-    await axiosInstance
-      .get(`api/auth/rating/view/${customerRating.id}`)
-      .then((response) => {
-        if (response?.status === 200) {
-          setRatingById(response.data.view_data);
-          const { rating, review } = response.data.view_data;
-          formikUpdateRating.setValues({ rating, review });
-          setReviewIdOpen(true);
-        }
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
-  
-  const createUpdateRatingSubmit = async (id, values) => {
-    await axiosInstance
-      .post(`api/auth/rating/update/${id}`, values)
-      .then((response) => {
-        if (response.status === 200) {
-          formikUpdateRating.handleReset();
-          setReviewIdOpen(false);
-          // succes
-          enqueueSnackbar(
-            <Alert
-              style={{
-                width: "100%",
-                padding: "30px",
-                backdropFilter: "blur(8px)",
-                background: "#ff7533 ",
-                fontSize: "19px",
-                fontWeight: 800,
-                lineHeight: "30px"
-              }}
-              icon={false}
-              severity="success"
-            >
-              {response?.data?.message}
-            </Alert>,
-            {
-              variant: "success",
-              iconVariant: true,
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "center",
-              },
-            }
-          );
-          getJobDetail();
-          handleClose(true);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  
-  const onSubmitUpdateRating = async (values) => {
-    if (ratingById && ratingById.id) {
-      createUpdateRatingSubmit(ratingById.id, values);
-    } else {
-      console.log("Rating ID not available");
-    }
-  };
-  
-  // Rating list api
-  const formikUpdateRating = useFormik({
-    initialValues: {
-      job_id: "",
-      user_id: "",
-      given_by: "customer",
-      rating: "",
-      review: "",
-    },
-    validate: (values) => {
-      const errors = {};
-      if (!values.review) {
-        errors.review = "Note is required";
-      }
-      if (!values.rating) {
-        errors.rating = "Rating is required";
-      }
-      return errors;
-    },
-    onSubmit: onSubmitUpdateRating,
-  });
-  
- 
+  console.log("jobDetail345", jobDetail, ratings);
   return (
     <React.Fragment>
       <Box mt={10} pb={12}>
@@ -233,7 +137,7 @@ const ViewJobHistory = () => {
             <Button
               variant="outlined"
               sx={{ my: 2 }}
-              onClick={() => router.push("/dashboard/company/job_history")}
+              onClick={() => router.push("/dashboard/customer/job_delete")}
             >
               <Iconify icon="ion:play-back" sx={{ mr: "7px" }} width={14} />
               Back
@@ -421,25 +325,15 @@ const ViewJobHistory = () => {
                 </Box>
                 <Box my={4}>
                   <Divider />
+
                   <Box my={3}>
                     <Box textAlign="right">
-                      {ratings &&
-                     ratings.some((item) => item.id === item.id) && ratings.some((item) => item.given_by === "customer" ) ? (
-                        <Button
-                          variant="outlined"
-                          onClick={() => handleEditRating(ratings)}
-                        >
-                     
-                          Edit Rating
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="outlined"
-                          onClick={() => setReviewOpen(true)}
-                        >
-                          + Add Rating
-                        </Button>
-                      )}
+                      <Button
+                        variant="outlined"
+                        onClick={() => setReviewOpen(true)}
+                      >
+                        + Add Rating
+                      </Button>
                     </Box>
                     <Box>
                       <Typography textAlign="center" variant="h4">
@@ -447,6 +341,7 @@ const ViewJobHistory = () => {
                       </Typography>
                     </Box>
                   </Box>
+
                   {ratings &&
                     ratings?.length > 0 &&
                     ratings.map((item, index) => {
@@ -558,7 +453,7 @@ const ViewJobHistory = () => {
           </TableContainer>
         </Box>
       </Modal>
-      {/* =================   Rating & Review Modal       ================== */}
+      {/* =================   Rating & Review Modal    ================== */}
       <Dialog
         open={reviewOpen}
         onClose={handleReviewOpen}
@@ -613,67 +508,8 @@ const ViewJobHistory = () => {
           </Box>
         </DialogContent>
       </Dialog>
-
-
-      {/* edit */}
-
-
-      <Dialog
-        open={reviewIdOpen}
-        onClose={handleReviewIdOpen}
-        maxWidth="xs"
-        fullWidth={true}
-      >
-        <DialogContent sx={{ my: 3 }}>
-          <Box component="form" noValidate onSubmit={formikUpdateRating.handleSubmit}>
-            <Box align="right">
-              <Iconify
-                icon="basil:cross-solid"
-                width={20}
-                onClick={handleReviewIdClose}
-                sx={{
-                  border: "1px solid grey",
-                  borderRadius: "50%",
-                  cursor: "pointer",
-                }}
-              />
-            </Box>
-            <Typography mb={2} variant="subtitle1">
-              Review
-            </Typography>
-            <Stack spacing={1}>
-              <Box>
-                <Rating
-                  value={ formikUpdateRating.values.rating}
-                  onChange={formikUpdateRating.handleChange}
-                  name="rating"
-                  helperText={formikUpdateRating.touched.rating && formikUpdateRating.errors.rating}
-                />
-              </Box>
-              <Box>
-                <TextBox
-                  size="small"
-                  name="review"
-                  label="Review"
-                  fullWidth
-                  multiline={true}
-                  rows="4"
-                  value={formikUpdateRating.values.review}
-                  onChange={formikUpdateRating.handleChange}
-                  helperText={formikUpdateRating.touched.review && formikUpdateRating.errors.review}
-                />
-              </Box>
-            </Stack>
-            <Stack direction="row" spacing={8}>
-              <Button fullWidth variant="outlined" type="submit">
-                Submit
-              </Button>
-            </Stack>
-          </Box>
-        </DialogContent>
-      </Dialog>
     </React.Fragment>
   );
 };
 
-export default ViewJobHistory;
+export default JobDeleteDetail;

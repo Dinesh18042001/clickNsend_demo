@@ -46,8 +46,7 @@ import React, { useState } from "react";
 import CardPaymentForm from "../paymentPage/CardPaymentForm";
 import CountUp from "react-countup";
 import CustomerDashboard from "../../customerDashboard";
-import CustomerCompanyCard from "@/module/dashboard/customercompanyCard/dashboardCard";
-const DashboardCompanyJobPost = ({ formik }) => {
+const DashboardJobPost = ({ formik }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [date, setDate] = React.useState("");
@@ -58,6 +57,8 @@ const DashboardCompanyJobPost = ({ formik }) => {
   const [loader, setLoader] = React.useState(false);
   const [adress, setAdress] = React.useState(false);
   const [showPayment, setShowPayment] = useState(false);
+  const [companyData, setCompanyData] = useState([]);
+
   // Add for filter
   const [paymentDetails, setPaymentDetails] = useState(null);
   const addressDetail = {
@@ -105,12 +106,21 @@ const DashboardCompanyJobPost = ({ formik }) => {
     fetch()
   },[])
 
+
+
+  React.useEffect(() => {
+    if (data) {
+      const filteredData = data.filter(compData => 
+        compData.created_by === "company" && compData.user_id === user.id
+      );
+      setCompanyData(filteredData);
+    }
+  }, [data, user]);
+  console.log(companyData?.length,"companyData")
   const handleCheckoutPayment = async (item) => {
     setPaymentDetails(item);
     setShowPayment(true);
   };
-
-
   return (
     <React.Fragment>
       <Box py={3} pb={12}>
@@ -118,7 +128,7 @@ const DashboardCompanyJobPost = ({ formik }) => {
           {!showPayment ? (
             <>
           <Box py={5}>
-            <CustomerCompanyCard jobPost={data?.length} />
+            <DashboardCard jobPost={companyData?.length} />
           </Box>
           <Box py={2}>
             {loader ? (
@@ -128,7 +138,7 @@ const DashboardCompanyJobPost = ({ formik }) => {
                 <Grid item md={7}>
                   <Stack direction="row" spacing={1} alignItems="center">
                     <Typography fontSize={28} fontWeight={600} color="primary">
-                      Job Posted By ME
+                      Job Posted By You
                     </Typography>
 
                     <Box
@@ -147,7 +157,7 @@ const DashboardCompanyJobPost = ({ formik }) => {
                         <CountUp
                           start={0}
                           duration={1}
-                          end={data?.length}
+                          end={companyData?.length}
                           enableScrollSpy={true}
                           scrollSpyDelay={200}
                         />
@@ -178,8 +188,8 @@ const DashboardCompanyJobPost = ({ formik }) => {
                       fullWidth
                       onClick={() =>{
                         adress?
-                        router.push("/dashboard/customer_company/job_post_form/create"):
-                        router.push("/customer/profile")
+                        router.push("/dashboard/company/job_post_form/create"):
+                        router.push("/company/profile")
                       }
                       }
                     >
@@ -189,15 +199,13 @@ const DashboardCompanyJobPost = ({ formik }) => {
                 </Grid>
               </Grid>
             )}
-
-          {console.log(data)}
           
           </Box>
 
           <Box py={2} sx={{ background: " " }}>
             <Grid container rowSpacing={0} justifyContent="center">
-              {data && data?.length > 0 ? (
-                data.map((item, index) => {
+              {companyData && companyData?.length > 0 ? (
+                companyData.map((item, index) => {
                   let productDetail =
                     item?.items && item?.items?.length > 0 && item?.items[0];
                   let addressDetail =
@@ -234,7 +242,7 @@ const DashboardCompanyJobPost = ({ formik }) => {
                               fontWeight={500}
                               onClick={() =>
                                 router.push(
-                                  `/dashboard/customer/job_history/detail/${item.id}`
+                                  `/dashboard/company/job_history/detail/${item.id}`
                                 )
                               }
                             >
@@ -705,7 +713,7 @@ const DashboardCompanyJobPost = ({ formik }) => {
                                     {item?.bid_id &&
                                       item?.bid_id !== null &&
                                       item?.status === 2 &&
-                                      item?.is_paid === 0 &&  user?.user_type == 'customer' && (
+                                      item?.is_paid === 0 &&  user?.user_type == 'company' && user?.profile.company_type == 'customer' && (
                                         <Box>
                                           <Button
                                             color="secondary"
@@ -742,7 +750,7 @@ const DashboardCompanyJobPost = ({ formik }) => {
                                           }
                                           onClick={() =>
                                             router.push(
-                                              `/dashboard/customer/driver_bid_list/${item.id}`
+                                              `/dashboard/company/driver_bid_list/${item.id}`
                                             )
                                           }
                                         >
@@ -760,7 +768,7 @@ const DashboardCompanyJobPost = ({ formik }) => {
                                         }
                                         onClick={() =>
                                           router.push(
-                                            `/dashboard/customer/job_post_form/${item?.id}`
+                                            `/dashboard/company/job_post_form/${item?.id}`
                                           )
                                         }
                                         disabled={
@@ -789,7 +797,7 @@ const DashboardCompanyJobPost = ({ formik }) => {
                                             }
                                             onClick={() =>
                                               router.push(
-                                                `/dashboard/customer/track_job/${item.bid_id}/${item.id}`
+                                                `/dashboard/company/track_job/${item.bid_id}/${item.id}`
                                               )
                                             }
                                             sx={{
@@ -816,7 +824,7 @@ const DashboardCompanyJobPost = ({ formik }) => {
 
                   {/* )} */}
                 </Grid>
-                {data && data?.length > 0 && (
+                {companyData && companyData?.length > 0 && (
                   <Box>
                     <Stack alignItems="center" justifyContent="center">
                       <Pagination
@@ -873,7 +881,7 @@ const DashboardCompanyJobPost = ({ formik }) => {
   );
 };
 
-export default DashboardCompanyJobPost;
+export default DashboardJobPost;
 
 const DeleteModal = ({ params }) => {
   const [open, setOpen] = React.useState(false);

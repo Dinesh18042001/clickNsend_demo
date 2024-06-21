@@ -17,7 +17,7 @@ import React, { useState } from "react";
 import CountUp from "react-countup";
 import { useAuthContext } from "@/auth/useAuthContext";
 import TextMaxLine from "@/components/text-max-line";
-import DashboardCard from "@/module/dashboard/companyCard/dashboardCard";
+import DashboardCard from "@/module/dashboard/customercompanyCard/dashboardCard";
 import {
   getJobHistory,
   setJobHistoryPage,

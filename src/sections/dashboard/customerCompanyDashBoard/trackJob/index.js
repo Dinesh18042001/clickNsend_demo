@@ -119,7 +119,7 @@ const TrackJob = () => {
             <Button
               variant="outlined"
               sx={{ my: 0 }}
-              onClick={() => router.push("/dashboard/customer_company/job_posted")}
+              onClick={() => router.push("/dashboard/company/job_posted")}
             >
               <Iconify icon="ion:play-back" sx={{ mr: "7px" }} width={14} />
               Back

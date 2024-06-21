@@ -9,7 +9,7 @@ import {
   getJobHistory,
   setJobHistoryPage,
   setJobHistoryPageSize,
-} from "@/redux/slices/job/customer";
+} from "@/redux/slices/job/customercompany";
 import { useDispatch, useSelector } from "@/redux/store";
 import { PageSizes } from "@/utils/constant";
 import { Search } from "@mui/icons-material";
@@ -39,7 +39,7 @@ const JobHistory = ({ formik }) => {
   const dispatch = useDispatch();
   const {
     jobHistory: { pageCount, data, page, pageSize, dataCount },
-  } = useSelector((state) => state.customerJob);
+  } = useSelector((state) => state.companyJob);
   const [layout, setLayout] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [select, setSelect] = React.useState("new");
@@ -62,6 +62,8 @@ const JobHistory = ({ formik }) => {
       })
     );
   }, [page, pageSize, date, search]);
+
+
 
   return (
     <React.Fragment>
@@ -501,7 +503,7 @@ const JobHistory = ({ formik }) => {
                                   variant="outlined"
                                   onClick={() =>
                                     router.push(
-                                      `/dashboard/customer/job_history/detail/${elem.id}`
+                                      `/dashboard/company/job_history/detail/${elem.id}`
                                     )
                                   }
                                 >

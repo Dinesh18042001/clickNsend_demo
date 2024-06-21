@@ -268,7 +268,7 @@ console.log('values values',values)
           .then((response) => {
             if (response?.status === 200) {
               setFieldValue("items", JSON.parse(values?.items));
-              router.push(`/dashboard/${user?.user_type}/job_posted`);
+              router.push(`/dashboard/company/job_posted`);
                // succes
           enqueueSnackbar(
             <Alert

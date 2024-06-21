@@ -159,7 +159,7 @@ const BidList = () => {
       .get(`api/auth/jobs/accept-bid/${id}`)
       .then((response) => {
         if (response.status === 200) {
-          router.push("/dashboard/customer/job_posted");
+          router.push("/dashboard/company/job_posted");
           // succes
           enqueueSnackbar(
             <Alert
@@ -255,7 +255,7 @@ const BidList = () => {
                       <Stack
                         alignItems="center"
                         onClick={() =>
-                          router.push("/dashboard/customer/job_posted")
+                          router.push("/dashboard/company/job_posted")
                         }
                         mr={2}
                         sx={{
@@ -278,9 +278,9 @@ const BidList = () => {
                           fontSize={28}
                           color="primary"
                           fontWeight={600}
-                        >
+                        > 12
                           Applied Bids
-                        </Typography>
+                        </Typography> 
                       </Box>
                     </Stack>
                     <Stack
