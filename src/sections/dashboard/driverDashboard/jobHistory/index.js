@@ -544,7 +544,7 @@ const JobHistory = ({ formik }) => {
                                       View Detail
                                     </Button>
                                   </Box>
-                                  <Box>
+                                  {/* <Box>
                                     <Button
                                       sx={{ fontWeight: 500 }}
                                       fullWidth
@@ -558,9 +558,9 @@ const JobHistory = ({ formik }) => {
                                         setSelectedPDFData(elem); // Store the selected PDF data
                                       }}
                                     >
-                                      View PDF
+                                      View Invoice
                                     </Button>
-                                  </Box>
+                                  </Box> */}
                                 </Stack>
                               </Stack>
                               <Stack
@@ -591,7 +591,7 @@ const JobHistory = ({ formik }) => {
                               {/* <Typography variant="subtitle2">
                               Total Spend: $30K+
                             </Typography> */}
-                              <Typography
+                              {/* <Typography
                                 variant="subtitle2"
                                 sx={{
                                   display: "flex",
@@ -601,7 +601,7 @@ const JobHistory = ({ formik }) => {
                                 Customer Spend:{" "}
                                 <Iconify icon="bi:currency-pound" />
                                 {elem?.spentmoney}+
-                              </Typography>
+                              </Typography> */}
                             </Stack>
                           </Box>
                         </CardContent>

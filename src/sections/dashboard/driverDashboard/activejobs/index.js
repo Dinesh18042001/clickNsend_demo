@@ -1039,17 +1039,7 @@ console.log('aaaaaa',formData.values);
                               {/* <Typography variant="subtitle2">
                               Total Spend: $30K+
                             </Typography> */}
-                              <Typography
-                                variant="subtitle2"
-                                sx={{
-                                  display: "flex",
-                                  alignItems: "flex-start",
-                                }}
-                              >
-                                Customer Spend:{" "}
-                                <Iconify icon="bi:currency-pound" />
-                                {elem?.spentmoney}+
-                              </Typography>
+                             
                             </Stack>
                           </Box>
                         </CardContent>

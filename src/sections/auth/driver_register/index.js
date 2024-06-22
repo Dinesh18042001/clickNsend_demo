@@ -1276,7 +1276,7 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
             {/* change this */}
             <Box>
               <Typography sx={{ fontSize: "16px" }}>
-                Didn't receive OTP?{" "}
+                Didn&apos;t receive OTP?{" "}
                 {!showResendLink && (
                   <Typography
                     color="primary"

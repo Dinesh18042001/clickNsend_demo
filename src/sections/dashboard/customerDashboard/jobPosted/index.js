@@ -528,6 +528,7 @@ const DashboardJobPost = ({ formik }) => {
                                         .filter((ds) => ds.type === "pickup")
                                         ?.map((addressItem, index) => (
                                           <TimelineItem
+                                          key={index}
                                             sx={{
                                               "&.MuiTimelineItem-root": {
                                                 minHeight: "50px",
