@@ -47,6 +47,7 @@ import CardPaymentForm from "../paymentPage/CardPaymentForm";
 import CountUp from "react-countup";
 import CustomerDashboard from "../../customerDashboard";
 const DashboardJobPost = ({ formik }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
   const dispatch = useDispatch();
   const [date, setDate] = React.useState("");
@@ -59,6 +60,7 @@ const DashboardJobPost = ({ formik }) => {
   const [showPayment, setShowPayment] = useState(false);
   const [companyData, setCompanyData] = useState([]);
 
+  const address =  user?.profile?.address
   // Add for filter
   const [paymentDetails, setPaymentDetails] = useState(null);
   const addressDetail = {
@@ -121,6 +123,69 @@ const DashboardJobPost = ({ formik }) => {
     setPaymentDetails(item);
     setShowPayment(true);
   };
+
+  const handleAddNewJob = () => {
+    if (user.plan === null) {
+      enqueueSnackbar(
+        <Alert
+          style={{
+            width: "100%",
+            padding: "30px",
+            backdropFilter: "blur(8px)",
+            background: "#ff7533 ",
+            fontSize: "19px",
+            fontWeight: 800,
+            lineHeight: "30px",
+          }}
+          icon={false}
+          severity="success"
+        >
+          Please Buy Subscription
+        </Alert>,
+        {
+          variant: "success",
+          iconVariant: true,
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "center",
+          },
+        }
+      );
+    } else {
+      if (!address || address.trim() === "") {
+        router.push("/company/profile");
+        enqueueSnackbar(
+          <Alert
+            style={{
+              width: "100%",
+              padding: "30px",
+              backdropFilter: "blur(8px)",
+              background: "#ff7533 ",
+              fontSize: "19px",
+              fontWeight: 800,
+              lineHeight: "30px",
+            }}
+            icon={false}
+            severity="success"
+          >
+            Please Update Address
+          </Alert>,
+          {
+            variant: "success",
+            iconVariant: true,
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "center",
+            },
+          }
+        );
+      } else {
+        router.push("/dashboard/company/job_post_form/create");
+      }
+    }
+  };
+  
+
   return (
     <React.Fragment>
       <Box py={3} pb={12}>
@@ -186,12 +251,7 @@ const DashboardJobPost = ({ formik }) => {
                       startIcon={<Add />}
                       variant="contained"
                       fullWidth
-                      onClick={() =>{
-                        adress?
-                        router.push("/dashboard/company/job_post_form/create"):
-                        router.push("/company/profile")
-                      }
-                      }
+                      onClick={handleAddNewJob}
                     >
                       Add New Job
                     </Button>
@@ -711,7 +771,7 @@ const DashboardJobPost = ({ formik }) => {
                                   </Typography>
 
                                   <Stack direction="row" spacing={2}>
-                                    {item?.bid_id &&
+                                    {/* {item?.bid_id &&
                                       item?.bid_id !== null &&
                                       item?.status === 2 &&
                                       item?.is_paid === 0 &&  user?.user_type == 'company' && user?.profile.company_type == 'customer' && (
@@ -727,10 +787,10 @@ const DashboardJobPost = ({ formik }) => {
                                               fontWeight: 500,
                                             }}
                                           >
-                                            Pay
+                                            Pay 1
                                           </Button>
                                          </Box>
-                                      )}
+                                      )} */}
                                     <Box>
                                       <Badge
                                         badgeContent={
@@ -760,6 +820,7 @@ const DashboardJobPost = ({ formik }) => {
                                       </Badge>
                                     </Box>
                                     <Box>
+                                    {   item?.status === 0  &&
                                       <Button
                                         color="dark"
                                         fullWidth
@@ -783,11 +844,11 @@ const DashboardJobPost = ({ formik }) => {
                                         }}
                                       >
                                         Edit Job
-                                      </Button>
+                                      </Button> }
                                     </Box>
                                     {item?.bid_id &&
                                       item?.bid_id !== null &&
-                                      item?.status !== 1 && (
+                                      item?.status === 3 && (
                                         <Box>
                                           <Button
                                             color="primary"

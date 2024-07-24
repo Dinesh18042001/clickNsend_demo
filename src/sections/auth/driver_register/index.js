@@ -238,6 +238,7 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
         console.log('newPhoneNumber',newPhoneNumber);
         const url = "/api/user/send-otp";
         const formData = {
+          email: `${newPhoneNumber}`,
           dial_code: `${selectedCoutry}`,
           type: "mobile",
           logged: "no",
@@ -430,7 +431,7 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
     let formData;
 
     formData = {
-      email: `${selectedCoutry}${formik.values.mobile}`,
+      email: `${formik.values.mobile}`,
       type: "mobile",
       logged: "no",
     };
@@ -787,7 +788,7 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
                           variant="contained"
                           color="primary"
                           disabled={isButtonDisabled || formik.values.mobile.length !== 11} // Set disabled state
-                          sx={{ width: "100px", marginLeft: "10px" }}
+                          sx={{ width: "110px", marginLeft: "10px" }}
                           onClick={() => {
                             reformik.handleSubmit();
                             setIsButtonDisabled(true); // Disable button after click
@@ -1293,7 +1294,7 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
                     component="span"
                     fontWeight={500}
                     sx={{ cursor: "pointer", fontSize: "15px" }}
-                    onClick={handleReSendLoginOTP1}
+                    onClick={handleReSendLoginOTP}
                   >
                     Resend OTP
                   </Typography>
@@ -1313,10 +1314,9 @@ const DriverRegister = ({ formik, open, handleOpenClose,setOTPSubmitVerified }) 
             <Button
               variant="contained"
               color="dark"
-              // onClick={() => {
-              //   onClose();
-              //   handleClose();
-              // }}
+              onClick={() => {
+                setOpens(true);              
+              }}
             >
               Close
             </Button>

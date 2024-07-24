@@ -470,9 +470,9 @@ const JobDelete = ({ formik }) => {
                                   alignItems: "flex-start",
                                 }}
                               >
-                                Customer Spend:{" "}
-                                <Iconify icon="bi:currency-pound" />
-                                {elem?.spentmoney}+
+                                {/* Customer Spend:{" "} */}
+                                {/* <Iconify icon="bi:currency-pound" />
+                                {elem?.spentmoney}+ */}
                               </Typography>
                             </Stack>
                           </Box>

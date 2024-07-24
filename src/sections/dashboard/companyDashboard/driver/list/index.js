@@ -216,7 +216,7 @@ const DriverJobListSection = ({ formik }) => {
                               }}
                               fontWeight={500}
                             >
-                              {item?.email}
+                            {item.user_name}
                             </Typography>
                           </Box>
                           <Box>
@@ -225,21 +225,21 @@ const DriverJobListSection = ({ formik }) => {
                         <Divider />
                         <CardContent>
                           <Grid container spacing={2} alignItems="start">
-                            <Grid item md={3}>
+                            <Grid item md={6}>
                               <Box>
-                                <Typography fontSize={28} fontWeight={500}>
-                                  {item.user_name}
+                                <Typography fontSize={18} fontWeight={500}>
+                                {item?.email}
                                 </Typography>
                               </Box>
                              
-                              <Stack direction="row" spacing={1}>
+                              <Stack style={{paddingTop: "36px",}} direction="row" spacing={1}>
                                 <React.Fragment key={index}>
                                   <Box
                                     component="img"
                                     alt={item.user_name}
                                     src={`${item.base_url}${item.profile_img}`}
                                     sx={{
-                                      width: "83px",
+                                      width: "103px",
                                       height: "59px",
                                       border: "1px solid lightgrey",
                                       objectFit: "cover",
@@ -366,7 +366,6 @@ const DriverJobListSection = ({ formik }) => {
                               </Box>
                               
                             </Grid>
-                            <Grid item md={3}></Grid>
                           </Grid>
                           <Divider sx={{ my: 2 }} />
                           <Box>

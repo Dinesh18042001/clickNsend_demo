@@ -26,6 +26,7 @@ import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import Alert from "@mui/material/Alert";
 import React, { useEffect, useState } from "react";
+import CardPaymentForm from "../paymentPage/CardPaymentForm";
 
 const BidList = () => {
   const router = useRouter();
@@ -43,7 +44,8 @@ const BidList = () => {
   const [loading, setLoading] = useState(false);
   const [mapData, setMapData] = React.useState([]);
   const [datas, setDatas] = React.useState([]);
-
+  const [amountDetails, setAmountDetails] = useState(null);
+  const [showPayment, setShowPayment] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleFilterClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -230,10 +232,18 @@ const BidList = () => {
     setFilterPrice(event.target.value);
   };
 
+  const handleCheckoutPayment = async (item) => {
+    setAmountDetails(item);
+    setShowPayment(true);
+  };
+
+
   return (
     <React.Fragment>
       <Box py={4} sx={{ mt: 10 }} pb={12}>
         <Container>
+        {!showPayment ? (
+          <>
           <Grid container spacing={2}>
             {loading ? (
               <Grid item md={6}>
@@ -466,7 +476,7 @@ const BidList = () => {
                                           fontSize={16}
                                           fontWeight={600}
                                         >
-                                          £ {total}
+                                          £ {elem?.ammount}
                                         </Typography>
                                       </Box>
                                       <Stack direction="row" spacing={1}>
@@ -489,13 +499,30 @@ const BidList = () => {
                                             setStartChat(elem?.id)
                                           }
                                         >
-                                          {elem?.status === 1 ||
-                                          elem?.status === 2 ||
-                                          elem?.status === 3
-                                            ? "Accepted"
-                                            : elem?.status === 4
-                                            ? "Declined"
-                                            : "Accept"}
+                                           {elem?.status === 1 
+  ? "Accepted"
+  : elem?.status === 4
+  ? "Declined"
+  : elem?.status === 2 && elem?.job?.is_paid === 0
+  ? <Box>
+                                          <Button
+                                            // color="secondary"
+                                            fullWidth
+                                            variant="contained"
+                                            onClick={() =>
+                                              handleCheckoutPayment(elem)
+                                            }
+                                            sx={{
+                                              fontWeight: 500,
+                                            }}
+                                          >
+                                            Pay
+                                          </Button>
+                                         </Box>
+  : elem?.status === 2 && elem?.job?.is_paid === 1
+  ? "Paid"
+  : "Accept"
+}
                                         </Button>
                                       </Stack>
                                     </Stack>
@@ -609,6 +636,14 @@ const BidList = () => {
               </Box>
             </Grid>
           </Grid>
+          </>
+          ) : (
+            <CardPaymentForm
+              paymentDetails={datas}
+            amountDetails={amountDetails}
+              setShowPayment={setShowPayment}
+            /> // Render the PaymentPage component when showPayment is true
+          )}
         </Container>
       </Box>
       <Box>

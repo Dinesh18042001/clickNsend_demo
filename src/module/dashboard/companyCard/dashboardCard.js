@@ -1,36 +1,66 @@
 import { useAuthContext } from "@/auth/useAuthContext";
 import Iconify from "@/components/iconify/Iconify";
-import { getCompanyDashboard } from "@/redux/slices/job/company";
+import {
+  getJobActive,
+  getJobAlert,
+  getJobHistory,
+  setJobActivePage,
+  setJobAlertPage,
+  setJobHistoryPage,
+} from "@/redux/slices/job/driver";
 import { useDispatch, useSelector } from "@/redux/store";
 import axiosInstance from "@/utils/axios";
 import {
   Box,
-  Card,
-  CardContent,
-  Grid,
+  Card, Grid,
   Stack,
-  Typography
+  Typography,CardContent
 } from "@mui/material";
+import { find } from "lodash";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import {
-  getJobDelete,
-  getJobHistory,
-  getJobPost,
-  setJobPostPage,
-} from "@/redux/slices/job/customer";
 const DashboardCard = ({ jobPost }) => {
   const router = useRouter();
-  const { user } = useAuthContext();
   const dispatch = useDispatch();
-  const { dashboard } = useSelector((state) => state.companyJob);
-  const [subscription, setSubscription] = React.useState([]);
-  console.log("dashboard", dashboard);
+  const { user } = useAuthContext();
+  const {
+    jobAlert: { pageCount, data, page, pageSize },
+    jobActive,
+    jobHistory,
+  } = useSelector((state) => state.driverJob);
 
+  const handlePageChange = (event, value) => {
+    dispatch(setJobAlertPage(value));
+    dispatch(setJobActivePage(value));
+    dispatch(setJobHistoryPage(value));
+  };
+
+  React.useEffect(() => {
+    dispatch(
+      getJobActive({
+        user_id: user?.id,type:user?.user_type  ,lat:0,long:0 
+      })
+    );
+  }, []);
+  useEffect(() => {
+    dispatch(
+      getJobAlert({user_id: user?.id,type:user?.user_type  ,lat:0,long:0 })
+    );
+  }, []);
+  useEffect(() => {
+    dispatch(
+      getJobHistory({
+        user_id: user?.id,type:user?.user_type  ,lat:0,long:0 
+      })
+    );
+  }, []);
+
+  const [subscription, setSubscription] = React.useState([]);
   // API FETCH LIST
-  const fetchdata = async (type = "company") => {
+  const fetchdata = async (type = "driver") => {
+    const statusShowPlan = 1 ;
     await axiosInstance
-      .get(`/api/auth/master/plan/list/${type}`)
+      .get(`/api/auth/master/plan/list/${type}/${statusShowPlan}`)
       .then((response) => {
         if (response.status === 200) {
           let subscriptionData = find(response?.data.view_data, { default: 1 });
@@ -45,37 +75,6 @@ const DashboardCard = ({ jobPost }) => {
   React.useEffect(() => {
     fetchdata();
   }, []);
-
-  useEffect(() => {
-    dispatch(getCompanyDashboard({ user_id: user?.id }));
-  }, [user?.id]);
-  useEffect(() => {
-    dispatch(
-      getJobPost({ user_id: user?.id, type: user?.user_type, lat: 0, long: 0 })
-    );
-  }, []);
-
-  React.useEffect(() => {
-    dispatch(
-      getJobHistory({
-        user_id: user?.id,
-        type: user?.user_type,
-        lat: 0,
-        long: 0,
-      })
-    );
-  }, []);
-
-  React.useEffect(() => {
-    dispatch(
-      getJobDelete({
-        user_id: user?.id,
-        type: user?.user_type,
-        lat: 0,
-        long: 0,
-      })
-    );
-  }, []);
   return (
     <React.Fragment>
       <Box sx={{ mt: 4 }}>
@@ -84,17 +83,17 @@ const DashboardCard = ({ jobPost }) => {
             <Card
               sx={{
                 backgroundColor:
-                  router.pathname === "/dashboard/company/driver/list"
+                  router.pathname === "/dashboard/company/driver/job_request"
                     ? "#145365"
                     : "#145365",
                 border: "1px solid #145365",
                 color:
-                  router.pathname === "/dashboard/company/driver/list"
+                  router.pathname === "/dashboard/company/driver/job_request"
                     ? "#fff"
                     : "#fff",
                 cursor: "pointer",
               }}
-              onClick={() => router.push("/dashboard/company/driver/list")}
+              onClick={() => router.push("/dashboard/company/driver/job_request")}
             >
               <CardContent>
                 <Stack
@@ -106,7 +105,7 @@ const DashboardCard = ({ jobPost }) => {
                   <Box
                     sx={{
                       backgroundColor: (theme) =>
-                        router.pathname === "/dashboard/company/driver/list"
+                        router.pathname === "/dashboard/company/driver/job_request"
                           ? "#246678"
                           : "#246678",
                     }}
@@ -120,10 +119,10 @@ const DashboardCard = ({ jobPost }) => {
                   </Box>
                   <Box>
                     <Typography variant="h6" fontWeight={300}>
-                      Job List 2
+                      Job List
                     </Typography>
                     <Typography variant="h4" textAlign="center">
-                      {dashboard?.drivers}
+                      {data?.length}
                     </Typography>
                   </Box>
                 </Stack>
@@ -134,17 +133,17 @@ const DashboardCard = ({ jobPost }) => {
             <Card
               sx={{
                 backgroundColor:
-                  router.pathname === "/dashboard/company/job_history"
+                  router.pathname === "/dashboard/company/driver/job_history"
                     ? "#FD9B3D"
                     : "#FD9B3D",
                 border: "1px solid #FD9B3D",
                 color:
-                  router.pathname === "/dashboard/company/job_history"
+                  router.pathname === "/dashboard/company/driver/job_history"
                     ? "#fff"
                     : "#fff",
                 cursor: "pointer",
               }}
-              onClick={() => router.push("/dashboard/company/job_history")}
+              onClick={() => router.push("/dashboard/company/driver/job_history")}
             >
               <CardContent>
                 <Stack
@@ -156,7 +155,7 @@ const DashboardCard = ({ jobPost }) => {
                   <Box
                     sx={{
                       backgroundColor: (theme) =>
-                        router.pathname === "/dashboard/company/job_history"
+                        router.pathname === "/dashboard/company/driver/job_history"
                           ? "#ffa54e"
                           : "#ffa54e",
                     }}
@@ -173,7 +172,7 @@ const DashboardCard = ({ jobPost }) => {
                       JOB HISTORY
                     </Typography>
                     <Typography variant="h4" textAlign={"center"}>
-                      {dashboard?.history}
+                    {jobHistory?.dataCount}
                     </Typography>
                   </Box>
                 </Stack>
@@ -184,17 +183,17 @@ const DashboardCard = ({ jobPost }) => {
             <Card
               sx={{
                 backgroundColor:
-                  router.pathname === "/dashboard/company/active_jobs"
+                  router.pathname === "/dashboard/company/driver/active_jobs"
                     ? "#FD9B3D"
                     : "#FD9B3D",
                 border: "1px solid #FD9B3D",
                 color:
-                  router.pathname === "/dashboard/company/active_jobs"
+                  router.pathname === "/dashboard/company/driver/active_jobs"
                     ? "#fff"
                     : "#fff",
                 cursor: "pointer",
               }}
-              onClick={() => router.push("/dashboard/company/active_jobs")}
+              onClick={() => router.push("/dashboard/company/driver/active_jobs")}
             >
               <CardContent>
                 <Stack
@@ -206,7 +205,7 @@ const DashboardCard = ({ jobPost }) => {
                   <Box
                     sx={{
                       backgroundColor: (theme) =>
-                        router.pathname === "/dashboard/company/job_post"
+                        router.pathname === "/dashboard/company/driver/active_jobs"
                           ? "#ffa54e"
                           : "#ffa54e",
                     }}
@@ -223,7 +222,7 @@ const DashboardCard = ({ jobPost }) => {
                       ACTIVE JOBS
                     </Typography>
                     <Typography variant="h5" textAlign="center">
-                      {dashboard?.active}
+                      {jobActive?.dataCount}
                     </Typography>
                   </Box>
                 </Stack>

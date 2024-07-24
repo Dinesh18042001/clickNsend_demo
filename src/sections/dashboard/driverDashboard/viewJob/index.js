@@ -128,12 +128,12 @@ const ViewJobHistory = () => {
                         
                       </TableHead>
                       <TableBody>
-                        {jobDetail?.pickup &&
+                        {/* {jobDetail?.pickup &&
                           jobDetail?.pickup?.length > 0 &&
                           jobDetail?.pickup.map((item, index) => {
-                            return (
+                            return ( */}
                               <TableRow
-                                key={`jobDetail${index}`}
+                                // key={`jobDetail${index}`}
                                 sx={{
                                   "&:last-child td, &:last-child th": {
                                     border: 0,
@@ -143,12 +143,12 @@ const ViewJobHistory = () => {
                                
                                 <TableCell>
                                   <Typography component="p" variant="body2">
-                                    {item?.item?.description}
+                                    {jobDetail?.job?.description}
                                   </Typography>
                                 </TableCell>
                               </TableRow>
-                            );
-                          })}
+                            {/* );
+                          })} */}
                       </TableBody>
                     </Table>
                   </TableContainer>

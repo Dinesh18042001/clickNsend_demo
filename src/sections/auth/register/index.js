@@ -292,7 +292,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
     // );
 
     const formData = {
-      email: mobileValue,
+      email: formik?.values?.mobile,
       otp: formik?.values?.otp,
     };
     const apiEndpoint = "api/user/validate-otp";
@@ -374,9 +374,10 @@ const Register = ({ formik, open, handleOpenClose }) => {
 
   const handleReSendLoginOTP = async () => {
     let formData;
-
+    let newPhoneNumber = formik?.values?.mobile?.replace(/^0+/, "");
+    console.log(newPhoneNumber);
     formData = {
-      email: `${selectedCoutry}${formik.values.mobile}`,
+      email: `${selectedCoutry}${newPhoneNumber}`,
       type: "mobile",
       logged: "no",
     };
@@ -476,6 +477,14 @@ const Register = ({ formik, open, handleOpenClose }) => {
         }
       });
   };
+
+  const [otp, setOtp] = React.useState("");
+
+  const handleOtpChange = (value) => {
+    setOtp(value);
+  };
+
+  const isOtpComplete = otp.length === 4;
 
   // console.log("loginOTP", loginOTP);
   // console.log("reformik", reformik);
@@ -742,7 +751,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
                           color="primary"
 
                           disabled={isButtonDisabled || formik.values.mobile.length !== 11} // Set disabled state
-                          sx={{ width: "100px", marginLeft: "10px" }}
+                          sx={{ width: "110px", marginLeft: "10px" }}
                           onClick={() => {
                             reformik.handleSubmit();
                             setIsButtonDisabled(true); // Disable button after click
@@ -1143,7 +1152,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
                 }`}
               </Typography>
             </Stack>
-            <OTPForm formik={reformik} showOTP={showOTP} />
+            <OTPForm formik={reformik} showOTP={showOTP} onOtpChange={handleOtpChange} />
 
             <Box>
               <Typography sx={{ fontSize: "16px" }}>
@@ -1164,7 +1173,7 @@ const Register = ({ formik, open, handleOpenClose }) => {
                     component="span"
                     fontWeight={500}
                     sx={{ cursor: "pointer", fontSize: "15px" }}
-                    onClick={handleReSendLoginOTP1}
+                    onClick={handleReSendLoginOTP}
                   >
                     Resend OTP
                   </Typography>
@@ -1178,20 +1187,18 @@ const Register = ({ formik, open, handleOpenClose }) => {
               onClick={() => handleValitateLoginOTP()}
               variant="contained"
               color="primary"
+              disabled={!isOtpComplete}
             >
               Verify
             </Button>
 
-            {/* <Button
+            <Button
               variant="contained"
               color="dark"
-              // onClick={() => {
-              //   onClose();
-              //   handleClose();
-              // }}
+              onClick={() =>setOpens(false) }
             >
               Close
-            </Button> */}
+            </Button>
           </DialogActions>
           {/* </Box> */}
         </Dialog>

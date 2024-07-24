@@ -261,7 +261,7 @@ const InvoicePage = () => {
       </div>
       {!showPayment ? (
         <>
-      <Typography variant="h4" gutterBottom>
+      <Typography style={{textAlign:'center',fontWeight:'800',fontSize:'24px',padding:'15px 0px 90px 0px'}} variant="h4" gutterBottom>
         Invoices Page
       </Typography>
 
@@ -324,31 +324,31 @@ const InvoicePage = () => {
               <TableCell>Job ID</TableCell>
               <TableCell>Job Title</TableCell>
               <TableCell>Invoice Date</TableCell>
-             { user?.user_type === "company" && user?.profile?.company_type === "customer" && <TableCell>Due Date</TableCell>  }
+             { user?.user_type === "company" && user?.profile?.company_type === "customer" &&  <TableCell>Due Date</TableCell>  }
               <TableCell>Status</TableCell>
               {/* <TableCell>Action</TableCell> */}
               <TableCell>amount</TableCell>
               { user?.user_type === "company" && user?.profile?.company_type === "customer" &&  <TableCell>late amount</TableCell> }
-              <TableCell>Action </TableCell>
+              <TableCell style={{textAlign:'center'}}>Action </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             { currentRows.length > 0  ? 
             <>{ currentRows.map((row, index) => (
-
               <TableRow key={index}>
+              {console.log('rowwwwww',row)}
                 <TableCell>{indexOfFirstRow + index + 1}</TableCell>
                 <TableCell>{row.invoice_number}</TableCell>
                 <TableCell>{row.job_id}</TableCell>
                 <TableCell>{row.job.name}</TableCell>
-                <TableCell >   { user?.user_type === "company" && user?.profile?.company_type === "customer" ?  <Button   variant="contained"
+                <TableCell >   { user?.user_type === "company" && user?.profile?.company_type === "customer"  && row?.job?.is_paid === 0 ?  <Button   variant="contained"
                     color="primary"
                     onClick={() =>  handleClickCompanyPayment(row)} >{new Date(row.created_at).toLocaleDateString()} Before</Button> : <> {new Date(row.created_at).toLocaleDateString()} </> } </TableCell>
 
 
-               { user?.user_type === "company" && user?.profile?.company_type === "customer" &&    <TableCell> <Button   variant="contained"
+               { user?.user_type === "company" && user?.profile?.company_type === "customer" && row?.job?.is_paid === 0  ?   <TableCell> <Button   variant="contained"
                     color="primary"
-                    onClick={() =>  handleClickCompanyPayment(row)} >{calculateDueDate(row.created_at)} After</Button> </TableCell> }
+                    onClick={() =>  handleClickCompanyPayment(row)} >{calculateDueDate(row.created_at)} After</Button> </TableCell> :<TableCell> Paid </TableCell>}
                 <TableCell>{row.job.status}</TableCell>
                 <TableCell>{row.amount}</TableCell>
                 { user?.user_type === "company" && user?.profile?.company_type === "customer" &&     <TableCell>
@@ -375,14 +375,25 @@ const InvoicePage = () => {
                     onClick={() => viewInvoice(row.id)}
                   >
                     View Invoice
-                  </Button> <Button
+                  </Button> 
+                  { row?.job?.is_paid === 0 &&  user?.user_type === "driver"  &&  <Button
                     variant="contained"
                     color="secondary"
                     onClick={() => sendInvoice(row.id)}
                     style={{ marginLeft: 8 }}
                   >
                     Send Invoice
-                  </Button>   </TableCell>
+                  </Button>   }
+
+                  { row?.job?.is_paid === 0 &&  user?.user_type === "company"  && user?.profile?.company_type === "driver"  &&  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => sendInvoice(row.id)}
+                    style={{ marginLeft: 8 }}
+                  >
+                    Send Invoice
+                  </Button>   }
+                  </TableCell>
               </TableRow>
               ))} </> : <>
               <h1 style={{display:'flex',justifyContent:'center',alignItems:'center',paddingTop:'30px',fontWeight:'700',color:'#000',fontSize:'20px'}}> No Data Found </h1>

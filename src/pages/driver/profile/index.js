@@ -31,6 +31,7 @@ const MyProfilePage = () => {
       email: "",
       mobile: "",
       plan_name: "",
+      address: "",
       company_certificate: "",
       company_certificate_url: "",
       company_vat: "",
@@ -79,11 +80,24 @@ const MyProfilePage = () => {
       formData.append("nationality_cert", values?.nationality_cert);
       formData = formData;
 
-      await axiosInstance
-        .post(`/api/auth/profile/update-driver-profile/${user?.id}`, formData)
-        .then((response) => {
-          if (response?.status === 200) {
-            enqueueSnackbar(
+      const addressFormData = new FormData();
+      addressFormData.append("address", values.address);
+      addressFormData.append("state", values.state);
+      addressFormData.append("city", values.city);
+      addressFormData.append("zip_code", values.zip_code);
+      addressFormData.append("lat", values.lat);
+      addressFormData.append("long", values.long);
+  
+      try {
+        const [profileResponse, addressResponse] = await Promise.all([
+          axiosInstance.post(`/api/auth/profile/update-driver-profile/${user?.id}`, formData),
+          axiosInstance.post(`/api/auth/profile/update-address/${user?.id}`, addressFormData),
+        ]);
+        console.log('addressFormData',addressFormData,'profileFormData',profileFormData)
+  
+        if (profileResponse?.status === 200) {
+          // succes
+          enqueueSnackbar(
             <Alert
               style={{
                 width: "100%",
@@ -108,9 +122,8 @@ const MyProfilePage = () => {
               },
             }
           );
-            getProfile();
-          } else {
-             // error
+        } else {
+              // error
         enqueueSnackbar(
           <Alert
             style={{
@@ -136,21 +149,78 @@ const MyProfilePage = () => {
             },
           }
         );
+        }
+  
+        if (addressResponse?.status === 200) {
+           // succes
+           enqueueSnackbar(
+            <Alert
+              style={{
+                width: "100%",
+                padding: "30px",
+                backdropFilter: "blur(8px)",
+                background: "#ff7533 ",
+                fontSize: "19px",
+                fontWeight: 800,
+                lineHeight: "30px"
+              }}
+              icon={false}
+              severity="success"
+            >
+              {response?.data?.message}
+            </Alert>,
+            {
+              variant: "success",
+              iconVariant: true,
+              anchorOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+            }
+          );
+        } else {
+              // error
+        enqueueSnackbar(
+          <Alert
+            style={{
+              width: "100%",
+              padding: "30px",
+              filter: blur("8px"),
+              background: "#ffe9d5 ",
+              fontSize: "19px",
+              fontWeight: 800,
+              lineHeight: "30px",
+            }}
+            icon={false}
+            severity="error"
+          >
+            {response?.data?.error}
+          </Alert>,
+          {
+            variant: "error",
+            iconVariant: true,
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "center",
+            },
           }
-        })
-        .catch((error) => {
-          const { response } = error;
-          if (response.status === 422) {
-            console.log("response", response.data.error);
-            // eslint-disable-next-line no-unused-vars
-            for (const [key] of Object.entries(values)) {
-              if (response.data.error[key]) {
-                setErrors({ [key]: response.data.error[key][0] });
-              }
+        );
+        }
+  
+        getProfile();
+      } catch (error) {
+        const { response } = error;
+        if (response?.status === 422) {
+          console.log("response", response.data.error);
+          // eslint-disable-next-line no-unused-vars
+          for (const [key] of Object.entries(values)) {
+            if (response.data.error[key]) {
+              setErrors({ [key]: response.data.error[key][0] });
             }
           }
-          if (response?.data?.status === 406) {
-             // error
+        }
+        if (response?.data?.status === 406) {
+              // error
         enqueueSnackbar(
           <Alert
             style={{
@@ -176,8 +246,8 @@ const MyProfilePage = () => {
             },
           }
         );
-          }
-        });
+        }
+      }
     },
   });
 
@@ -207,7 +277,7 @@ const MyProfilePage = () => {
           formik.setFieldValue("profile_img", newData?.profile?.profile_img);
 
           formik.setFieldValue(
-            "driving_license_url_front",
+            "licence_front_url",
             `${newData?.profile?.base_url}${newData?.profile?.licence_front}`
           );
 
@@ -217,7 +287,7 @@ const MyProfilePage = () => {
           );
 
           formik.setFieldValue(
-            "driving_license_url_back",
+            "licence_back_url",
             `${newData?.profile?.base_url}${newData?.profile?.licence_back}`
           );
 
@@ -278,7 +348,7 @@ const MyProfilePage = () => {
             "dvia_cert_url",
             `${newData?.profile?.base_url}${newData?.profile?.dvia_cert}`
           );
-
+          formik.setFieldValue("address", newData?.profile?.address);
           formik.setFieldValue("dvia_cert", newData?.profile?.dvia_cert);
 
           formik.setFieldValue(
@@ -337,6 +407,9 @@ const MyProfilePage = () => {
                     URL.createObjectURL(e.target.files[0])
                   );
                 }}
+                helperText={
+                  formik.touched.licence_front && formik.errors.licence_front
+                }
               />
             )}
 

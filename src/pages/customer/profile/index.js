@@ -48,12 +48,8 @@ const MyProfilePage = () => {
       addressFormData.append("lat", values.lat);
       addressFormData.append("long", values.long);
   
-      try {
-        const [profileResponse, addressResponse] = await Promise.all([
-          axiosInstance.post(`/api/auth/profile/update-customer-profile/${user?.id}`, profileFormData),
-          axiosInstance.post(`/api/auth/profile/update-address/${user?.id}`, addressFormData),
-        ]);
-        console.log('addressFormData',addressFormData,'profileFormData',profileFormData)
+      try {  
+        const profileResponse = await axiosInstance.post(`/api/auth/profile/update-customer-profile/${user?.id}`, profileFormData);
   
         if (profileResponse?.status === 200) {
           // succes
@@ -71,7 +67,7 @@ const MyProfilePage = () => {
               icon={false}
               severity="success"
             >
-              {response?.data?.message}
+              {profileResponse?.data?.message}
             </Alert>,
             {
               variant: "success",
@@ -89,7 +85,7 @@ const MyProfilePage = () => {
             style={{
               width: "100%",
               padding: "30px",
-              filter: blur("8px"),
+              filter: "blur(8px)",
               background: "#ffe9d5 ",
               fontSize: "19px",
               fontWeight: 800,
@@ -98,7 +94,7 @@ const MyProfilePage = () => {
             icon={false}
             severity="error"
           >
-            {response?.data?.error}
+            {profileResponse?.data?.error}
           </Alert>,
           {
             variant: "error",
@@ -111,62 +107,7 @@ const MyProfilePage = () => {
         );
         }
   
-        if (addressResponse?.status === 200) {
-           // succes
-           enqueueSnackbar(
-            <Alert
-              style={{
-                width: "100%",
-                padding: "30px",
-                backdropFilter: "blur(8px)",
-                background: "#ff7533 ",
-                fontSize: "19px",
-                fontWeight: 800,
-                lineHeight: "30px"
-              }}
-              icon={false}
-              severity="success"
-            >
-              {response?.data?.message}
-            </Alert>,
-            {
-              variant: "success",
-              iconVariant: true,
-              anchorOrigin: {
-                vertical: "top",
-                horizontal: "center",
-              },
-            }
-          );
-        } else {
-              // error
-        enqueueSnackbar(
-          <Alert
-            style={{
-              width: "100%",
-              padding: "30px",
-              filter: blur("8px"),
-              background: "#ffe9d5 ",
-              fontSize: "19px",
-              fontWeight: 800,
-              lineHeight: "30px",
-            }}
-            icon={false}
-            severity="error"
-          >
-            {response?.data?.error}
-          </Alert>,
-          {
-            variant: "error",
-            iconVariant: true,
-            anchorOrigin: {
-              vertical: "top",
-              horizontal: "center",
-            },
-          }
-        );
-        }
-  
+       await axiosInstance.post(`/api/auth/profile/update-address/${user?.id}`, addressFormData);     
         getProfile();
       } catch (error) {
         const { response } = error;
@@ -186,7 +127,7 @@ const MyProfilePage = () => {
             style={{
               width: "100%",
               padding: "30px",
-              filter: blur("8px"),
+              filter: "blur(8px)",
               background: "#ffe9d5 ",
               fontSize: "19px",
               fontWeight: 800,

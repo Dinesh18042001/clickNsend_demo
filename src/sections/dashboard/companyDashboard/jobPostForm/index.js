@@ -94,7 +94,7 @@ const JobPostForm = ({
                   component={Link}
                   sx={{ textDecoration: "none" }}
                   color="grey"
-                  href="/dashboard/customer/job_posted"
+                  href="/dashboard/company/job_posted"
                 >
                   Dashboard
                 </Box>
@@ -102,14 +102,14 @@ const JobPostForm = ({
                   component={Link}
                   sx={{ textDecoration: "none" }}
                   color="grey"
-                  href="/dashboard/customer/job_posted"
+                  href="/dashboard/company/job_posted"
                 >
                   Job Posted
                 </Box>
                 <Typography color="text.primary">
                   {id === "create" ? "Add New Job" : "Edit Job"}
                 </Typography>
-              </Breadcrumbs>
+              </Breadcrumbs> 
             </Box>
             <Box>
               <Card sx={{ borderRadius: "0px" }}>
@@ -163,7 +163,7 @@ const JobPostForm = ({
                                 variant="outlined"
                                 fullWidth
                                 onClick={() =>
-                                  router.push("/dashboard/customer/job_posted")
+                                  router.push("/dashboard/company/job_posted")
                                 }
                               >
                                 Cancel
@@ -177,7 +177,7 @@ const JobPostForm = ({
                                 fullWidth
                                 type="submit"
                                 onClick={() =>
-                                  router.push("/dashboard/customer/job_posted")
+                                  router.push("/dashboard/company/job_posted")
                                 }
                               >
                                 Save

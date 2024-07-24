@@ -72,7 +72,7 @@ const CustomerCompanyDashboard = () => {
                           pulvinar.
                         </Typography>
                         <Box>
-                          {/* <Button
+                          <Button
                             sx={{ fontSize: "14px" }}
                             variant="contained"
                             onClick={() =>
@@ -92,7 +92,7 @@ const CustomerCompanyDashboard = () => {
                             // }}
                           >
                             POST YOUR JOB 
-                          </Button> */}
+                          </Button>
                         </Box>
                       </Stack>
                     </Stack>

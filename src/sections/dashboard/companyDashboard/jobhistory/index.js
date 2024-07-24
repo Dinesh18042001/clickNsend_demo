@@ -158,7 +158,7 @@ const JobHistory = ({ formik }) => {
                               color="common.black"
                               fontSize={17}
                             >
-                              {elem?.description}
+                               {elem.name}
                             </TextMaxLine>
                           </Box>
                         </Stack>
@@ -173,7 +173,7 @@ const JobHistory = ({ formik }) => {
                                   fontSize={28}
                                   fontWeight={500}
                                 >
-                                  {elem.name}
+                                   {elem?.description}
                                 </TextMaxLine>
                               </Box>
                               <Stack direction="row" spacing={2} mb={2}>
@@ -514,9 +514,9 @@ const JobHistory = ({ formik }) => {
                                   alignItems: "flex-start",
                                 }}
                               >
-                                Customer Spend:{" "}
+                                {/* Customer Spend:{" "}
                                 <Iconify icon="bi:currency-pound" />
-                                {elem?.spentmoney}+
+                                {elem?.spentmoney}+ */}
                               </Typography>
                             </Stack>
                           </Box>

@@ -39,11 +39,14 @@ import {
   setJobHistoryPage,
 } from "@/redux/slices/job/driver";
 import { PDFViewer } from "@react-pdf/renderer";
+import { useSnackbar } from "notistack";
 import InvoicePDF from "../activejobs/InvoicePDF";
+import Alert from "@mui/material/Alert";
 import TextMaxLine from "@/components/text-max-line";
 import moment from "moment";
 const JobHistory = ({ formik }) => {
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   const {
     jobHistory: { pageCount, data, page, pageSize },
@@ -69,6 +72,7 @@ const JobHistory = ({ formik }) => {
   // const [data, setData] = React.useState([]);
   const [search, setSearch] = React.useState("");
   const [date, setDate] = React.useState("");
+  const [storeInvoiceNumber, setStoreInvoiceNumber] = React.useState();
 
   const handlePageChange = (event, value) => {
     dispatch(setJobHistoryPage(value));
@@ -86,6 +90,75 @@ const JobHistory = ({ formik }) => {
       })
     );
   }, [page, pageSize, date, search]);
+
+
+  React.useEffect(() => {
+
+    const fetchdata = async () => {
+      await axiosInstance
+        .get("api/auth/invoice/number")
+        .then((response) => {
+          if (response.status === 200) {
+            setStoreInvoiceNumber(response?.data) 
+          }
+        })
+        .catch((error) => {
+          const { response } = error;
+          console.log(error);
+        });
+    };
+  fetchdata();
+}, []);
+console.log('(storeInvoiceNumber)',storeInvoiceNumber)
+
+  const handleAddSendItem = async(elem) => {
+    console.log('(elem)',elem)
+      const initialValues =  {
+            user_id: elem?.driver_id,
+              invoice_number: storeInvoiceNumber?.invoice_number,
+              job_id: elem.id,
+              sign_image:'www.img.com'
+          }
+        await axiosInstance
+            .post("api/auth/invoice/add-send",initialValues)
+            .then((response) => {
+              if (response.status === 200) {
+                enqueueSnackbar(
+                  <Alert
+                    style={{
+                      width: "100%",
+                      padding: "30px",
+                      backdropFilter: "blur(8px)",
+                      background: "#ff7533 ",
+                      fontSize: "19px",
+                      fontWeight: 800,
+                      lineHeight: "30px",
+                    }}
+                    icon={false}
+                    severity="success"
+                  >
+                    {response?.data?.message}
+
+                  </Alert>,
+                  {
+                    variant: "success",
+                    iconVariant: true,
+                    anchorOrigin: {
+                      vertical: "top",
+                      horizontal: "center",
+                    },
+                  }
+                );
+              }
+              window.location.reload()
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+      
+
+  }
+
 
   return (
     <React.Fragment>
@@ -190,7 +263,7 @@ const JobHistory = ({ formik }) => {
                               color="common.black"
                               fontSize={17}
                             >
-                              {elem?.description}
+                              {elem.name}
                             </TextMaxLine>
                             {/* <Typography
                               color="common.black"
@@ -216,7 +289,7 @@ const JobHistory = ({ formik }) => {
                                   fontSize={28}
                                   fontWeight={500}
                                 >
-                                  {elem.name}
+                                  {elem?.description}
                                 </TextMaxLine>
                                 {/* <Typography fontSize={28} fontWeight={500}>
                                   {elem.name}
@@ -544,23 +617,21 @@ const JobHistory = ({ formik }) => {
                                       View Detail
                                     </Button>
                                   </Box>
-                                  {/* <Box>
+                                  {
+                                    elem.is_paid == 0 &&
+                                   <Box>
                                     <Button
                                       sx={{ fontWeight: 500 }}
                                       fullWidth
                                       color="secondary"
                                       variant="outlined"
-                                      startIcon={
-                                        <Iconify icon="carbon:view-filled" />
-                                      }
-                                      onClick={() => {
-                                        setOpenPDF(true);
-                                        setSelectedPDFData(elem); // Store the selected PDF data
-                                      }}
+                                     
+                                      onClick={() => handleAddSendItem(elem)}
                                     >
-                                      View Invoice
+                                      Invoice Item
                                     </Button>
-                                  </Box> */}
+                                  </Box> 
+                                   }
                                 </Stack>
                               </Stack>
                               <Stack

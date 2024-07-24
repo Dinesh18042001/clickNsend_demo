@@ -278,7 +278,7 @@ const BidList = () => {
                           fontSize={28}
                           color="primary"
                           fontWeight={600}
-                        > 12
+                        >
                           Applied Bids
                         </Typography> 
                       </Box>
@@ -466,7 +466,7 @@ const BidList = () => {
                                           fontSize={16}
                                           fontWeight={600}
                                         >
-                                          £ {total}
+                                          £ {elem?.ammount}
                                         </Typography>
                                       </Box>
                                       <Stack direction="row" spacing={1}>

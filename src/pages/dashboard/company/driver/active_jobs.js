@@ -1,7 +1,7 @@
 import AuthGuard from "@/auth/AuthGuard";
 import SubscriptionDialog from "@/components/dialog/subscriptionDialog";
 import { PrimaryWebLayout } from "@/layout";
-import DashboardAddJob from "@/sections/dashboard/companyDashboard/activejobs";
+import DashboardJobPost from "@/sections/dashboard/companyDashboard/driver/activejobs";
 import { useFormik } from "formik";
 
 const DashboardPageNext = () => {
@@ -11,14 +11,18 @@ const DashboardPageNext = () => {
     },
   });
   return (
-    <AuthGuard>
-      <DashboardAddJob formik={formik} />
+    <>
+      <DashboardJobPost formik={formik} />
       <SubscriptionDialog />
-    </AuthGuard>
+    </>
   );
 };
 
 DashboardPageNext.getLayout = function getLayout(page) {
-  return <PrimaryWebLayout>{page}</PrimaryWebLayout>;
+  return (
+    <PrimaryWebLayout>
+      <AuthGuard>{page} </AuthGuard>
+    </PrimaryWebLayout>
+  );
 };
 export default DashboardPageNext;

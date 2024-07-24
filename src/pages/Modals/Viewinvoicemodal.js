@@ -3,7 +3,7 @@ import { useReactToPrint } from 'react-to-print';
 import { Modal, Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { CenterFocusStrongOutlined } from '@mui/icons-material';
 
-export default function ViewInvoiceModal({ isOpen, onClose ,invoiceDetails=""}) {
+export default function ViewInvoiceModal({ isOpen, onClose ,invoiceDetails}) {
   const invoiceRef = useRef();
 
   const handlePrint = useReactToPrint({
@@ -65,8 +65,8 @@ export default function ViewInvoiceModal({ isOpen, onClose ,invoiceDetails=""}) 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
               {/* <Typography><strong>CX Ref: 21256240</strong></Typography> */}
               <Box sx={{ textAlign: '' }}>
-                <Typography><strong>Invoice No: {invoiceDetails.invoice_number}</strong></Typography>
-                <Typography><strong>Invoice Date: {invoiceDetails.created_at}</strong></Typography>
+                <Typography><strong>Invoice No : {invoiceDetails?.invoice?.invoice_number}</strong></Typography>
+                <Typography><strong>Invoice Date: {invoiceDetails.invoice?.created_at}</strong></Typography>
               </Box>
             </Box>
             <TableContainer component={Paper}>
@@ -114,7 +114,7 @@ export default function ViewInvoiceModal({ isOpen, onClose ,invoiceDetails=""}) 
                   <TableBody>
                     <TableRow>
                       <TableCell sx={tableCellStyles}>Subtotal</TableCell>
-                      <TableCell sx={tableCellStyles}>£70.00</TableCell>
+                      <TableCell sx={tableCellStyles}>£{invoiceDetails?.invoice?.amount}</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell sx={tableCellStyles}>VAT</TableCell>

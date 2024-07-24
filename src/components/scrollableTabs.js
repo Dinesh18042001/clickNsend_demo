@@ -9,6 +9,7 @@ import { Box, Stack, Typography, styled } from "@mui/material";
 import { useRouter } from "next/router";
 import { CustomeButton, SubmitButton } from "./button";
 import { StepperContext } from "./stepper/stepperContext";
+import { useAuthContext } from "@/auth/useAuthContext";
 
 import LinearProgress, {
   linearProgressClasses,
@@ -40,6 +41,7 @@ const ScrollableTabs = ({
   const router = useRouter();
   const { id } = router.query;
   const { value, setValue, handleChange } = useContext(StepperContext);
+  const { user } = useAuthContext();
 
   // console.log("dkhhfasdjhf", formik);
   const checkError = () => {
@@ -79,6 +81,7 @@ const ScrollableTabs = ({
   }, [formik]);
 
   const _handleBack = () => {
+    
     setValue(value - 1);
   };
   let steps = 100 / setStep;
@@ -111,7 +114,7 @@ const ScrollableTabs = ({
             sx={{ marginTop: "20px" }}
             className='suscribeTable_box_stack_responsive'
           >
-            {/* {value !== 0 && ( */}
+            {value !== 0 && (
             <Box sx={{width:"20%"}}>
               <CustomeButton
                 color="primary"
@@ -121,7 +124,19 @@ const ScrollableTabs = ({
                 disabled={value <= 0}
               />
             </Box>
-            {/* )} */}
+            )}
+            {value === 0 && (
+            <Box sx={{width:"20%"}}>
+              <CustomeButton
+                color="primary"
+                onClick={() => router.push(
+                                  `/dashboard/${user.user_type}/job_posted`
+                                )}
+                variant="outlined"
+                title="Cancel"
+              />
+            </Box>
+            )}
 
             <Box sx={{width:"auto"}}>
               <SubmitButton

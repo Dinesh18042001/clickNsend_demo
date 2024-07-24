@@ -135,7 +135,55 @@ const DashboardCard = () => {
               </Stack>
             </Card>
           </Grid>
-
+          <Grid item md={3}>
+            <Card
+              sx={{
+                p: 4,
+                backgroundColor:
+                  router.pathname === "/dashboard/driver/job_history"
+                    ? "#FD9B3D"
+                    : "#FD9B3D",
+                border: "1px solid #FD9B3D",
+                color:
+                  router.pathname === "/dashboard/driver/job_history"
+                    ? "#fff"
+                    : "#fff",
+                cursor: "pointer",
+              }}
+              onClick={() => router.push("/dashboard/driver/job_history")}
+            >
+              <Stack
+                direction="row"
+                justifyContent="space-around"
+                spacing={0}
+                alignItems="center"
+              >
+                <Box
+                  sx={{
+                    backgroundColor: (theme) =>
+                      router.pathname === "/dashboard/driver/job_history"
+                        ? "#ffa54e"
+                        : "#ffa54e",
+                  }}
+                  height="60px"
+                  py={0.5}
+                  px={1}
+                  borderRadius={5}
+                  component="div"
+                >
+                  <Iconify icon="ri:history-fill" width={48} />{" "}
+                </Box>
+                <Box>
+                  <Typography fontSize={16} fontWeight={300}>
+                    JOB HISTORY
+                  </Typography>
+                  <Typography variant="h5" textAlign={"center"}>
+                    {jobHistory?.dataCount}
+                  </Typography>
+                </Box>
+              </Stack>
+            </Card>
+          </Grid>
           <Grid item md={3}>
             <Card
               sx={{
@@ -186,55 +234,7 @@ const DashboardCard = () => {
             </Card>
           </Grid>
 
-          <Grid item md={3}>
-            <Card
-              sx={{
-                p: 4,
-                backgroundColor:
-                  router.pathname === "/dashboard/driver/job_history"
-                    ? "#FD9B3D"
-                    : "#FD9B3D",
-                border: "1px solid #FD9B3D",
-                color:
-                  router.pathname === "/dashboard/driver/job_history"
-                    ? "#fff"
-                    : "#fff",
-                cursor: "pointer",
-              }}
-              onClick={() => router.push("/dashboard/driver/job_history")}
-            >
-              <Stack
-                direction="row"
-                justifyContent="space-around"
-                spacing={0}
-                alignItems="center"
-              >
-                <Box
-                  sx={{
-                    backgroundColor: (theme) =>
-                      router.pathname === "/dashboard/driver/job_history"
-                        ? "#ffa54e"
-                        : "#ffa54e",
-                  }}
-                  height="60px"
-                  py={0.5}
-                  px={1}
-                  borderRadius={5}
-                  component="div"
-                >
-                  <Iconify icon="ri:history-fill" width={48} />{" "}
-                </Box>
-                <Box>
-                  <Typography fontSize={16} fontWeight={300}>
-                    JOB HISTORY
-                  </Typography>
-                  <Typography variant="h5" textAlign={"center"}>
-                    {jobHistory?.dataCount}
-                  </Typography>
-                </Box>
-              </Stack>
-            </Card>
-          </Grid>
+        
 
           <Grid item md={3}>
             <Card

@@ -17,9 +17,13 @@ import { useRouter } from "next/router";
 import axiosInstance from "@/utils/axios";
 import { useAuthContext } from "@/auth/useAuthContext";
 import OTPVerification from "../subscription/OTPVerification";
+import { useSnackbar } from "notistack";
+import Alert from "@mui/material/Alert";
 
 
 const CardPaymentForm = ({ paymentDetails, setShowPayment }) => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const { user } = useAuthContext();
   const router = useRouter();
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -142,12 +146,31 @@ const CardPaymentForm = ({ paymentDetails, setShowPayment }) => {
           }, 1500);
         }
       } catch (error) {
-        if (error.response) {
-          const { data } = error.response;
-          setFormErrors(data.errors);
-        } else {
-          console.error("An error occurred:", error.message);
-        }
+        enqueueSnackbar(
+          <Alert
+            style={{
+              width: "100%",
+              padding: "20px",
+              backdropFilter: "blur(8px)",
+              background: "#ff7533 ",
+              fontSize: "19px",
+              fontWeight: 800,
+              lineHeight: "30px"
+            }}
+            icon={false}
+            severity="success"
+          >
+            {error.response.data.error}
+          </Alert>,
+          {
+            variant: "success",
+            iconVariant: true,
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "center",
+            },
+          }
+        );
       }
     }
   };

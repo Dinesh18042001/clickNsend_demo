@@ -464,18 +464,21 @@ const ChangePasswordModal = () => {
     },
     validate: (values) => {
       const errors = {};
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,15}$/;
+    
       if (!values.password) {
         errors.password = "Password is required";
       }
 
       if (!values.new_password) {
         errors.new_password = "New password is required";
+      } else if (!passwordRegex.test(values.new_password)) {
+        errors.new_password = "New password must be 8-15 characters long, with at least one uppercase letter, one lowercase letter, one digit, and one special character";
       }
 
       if (!values.new_password_confirmation) {
         errors.new_password_confirmation = "Confirm password is required";
-      }
-      if (
+      } else if (
         values.new_password_confirmation &&
         values.new_password &&
         values.new_password_confirmation !== values.new_password
@@ -702,6 +705,7 @@ const ChangePasswordModal = () => {
                   fullWidth
                   size="small"
                   name="password"
+                  variant="standard"
                   value={formik.values.password}
                   onChange={formik.handleChange}
                   placeholder="Enter Current Password"
@@ -721,6 +725,7 @@ const ChangePasswordModal = () => {
                   fullWidth
                   size="small"
                   name="new_password"
+                  variant="standard"
                   value={formik.values.new_password}
                   onChange={formik.handleChange}
                   placeholder="Enter New Password"
@@ -739,6 +744,7 @@ const ChangePasswordModal = () => {
                 <PasswordBox
                   fullWidth
                   size="small"
+                  variant="standard"
                   name="new_password_confirmation"
                   value={formik.values.new_password_confirmation}
                   onChange={formik.handleChange}

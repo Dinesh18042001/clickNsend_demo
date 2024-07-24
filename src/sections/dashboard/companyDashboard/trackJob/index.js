@@ -13,19 +13,23 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import Alert from "@mui/material/Alert";
 
 const TrackJob = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const router = useRouter();
   const { query } = useRouter();
   const { slug } = query;
-  const [bid_id, job_id, driver_id] = slug;
+  const [bid_id, job_id] = slug;
   const { user } = useAuthContext();
   const [data, setData] = useState([]);
   const [mapData, setMapData] = React.useState([]);
 
   const initialValues = {
-    bid_id: bid_id,
-    user_id: driver_id,
+    bid_id: Number(bid_id),
+    user_id: Number(user?.id),
     job_id: job_id,
   };
   const fetchTrackJob = async () => {
@@ -40,13 +44,41 @@ const TrackJob = () => {
           );
         }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => { 
+        // setError (error)
+        enqueueSnackbar(
+          <Alert
+            style={{
+              width: "100%",
+              padding: "20px",
+              backdropFilter: "blur(8px)",
+              background: "#ff7533 ",
+              fontSize: "19px",
+              fontWeight: 800,
+              lineHeight: "30px"
+            }}
+            icon={false}
+            severity="success"
+          >
+            {error.response.data.error}
+          </Alert>,
+          {
+            variant: "success",
+            iconVariant: true,
+            anchorOrigin: {
+              vertical: "top",
+              horizontal: "center",
+            },
+          }
+        );
+      }
+        );
   };
   useEffect(() => {
-    if (bid_id && job_id && driver_id) {
+    if (bid_id && job_id && user?.id) {
       fetchTrackJob();
     }
-  }, [bid_id, job_id, driver_id]);
+  }, [bid_id]);
 
   console.log("queryquery", query);
 
@@ -87,7 +119,7 @@ const TrackJob = () => {
             <Button
               variant="outlined"
               sx={{ my: 0 }}
-              onClick={() => router.push("/dashboard/company/active_jobs")}
+              onClick={() => router.push("/dashboard/company/job_posted")}
             >
               <Iconify icon="ion:play-back" sx={{ mr: "7px" }} width={14} />
               Back

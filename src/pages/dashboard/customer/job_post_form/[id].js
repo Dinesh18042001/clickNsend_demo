@@ -11,6 +11,7 @@ import AuthGuard from "@/auth/AuthGuard";
 import { useAuthContext } from "@/auth/useAuthContext";
 import { StepperContext } from "@/components/stepper/stepperContext";
 import SubscriptionDialog from "@/components/dialog/subscriptionDialog";
+import company from "@/redux/slices/job/company";
 
 const PostJob = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -66,10 +67,16 @@ const PostJob = () => {
         if (element?.address?.length) {
           element.address.forEach((addressElement, addressIndex) => {
             // itemObject["address"]["index"] = elementIndex;
+
             if (!addressElement?.address) {
               addressObject = {
                 address: "Address is required",
                 index: addressIndex,
+              };
+              if (!addressElement?.company) {
+                addressObject.company = "CompanyName is required";
+              } else {
+                addressObject.company = "";
               };
             } else {
               addressObject = {
@@ -77,6 +84,20 @@ const PostJob = () => {
                 index: addressIndex,
               };
             }
+
+  // for company
+            // if (!addressElement?.company) {
+            //   addressObject = {
+            //     company: "CompnyName is required",
+            //     index: addressIndex,
+            //   };
+            // } else {
+            //   addressObject = {
+            //     company: "",
+            //     index: addressIndex,
+            //   };
+            // }
+
 
             if (!addressElement?.pin_code) {
               addressObject = {
@@ -213,7 +234,7 @@ const PostJob = () => {
   const formik = useFormik({
     initialValues: {
       user_id: user?.id,
-      created_by: user?.user_type ,
+      created_by: 'customer' ,
       name: "",
       vehicle: 0,
       vehical_type: 0,

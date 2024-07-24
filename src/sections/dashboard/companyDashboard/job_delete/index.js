@@ -438,7 +438,7 @@ const JobDelete = ({ formik }) => {
                                   variant="outlined"
                                   onClick={() =>
                                     router.push(
-                                      `/dashboard/customer/job_delete/detail/${elem.id}`
+                                      `/dashboard/company/job_delete/detail/${elem.id}`
                                     )
                                   }
                                 >
@@ -471,9 +471,9 @@ const JobDelete = ({ formik }) => {
                                   alignItems: "flex-start",
                                 }}
                               >
-                                Customer Spend:{" "}
+                                {/* Customer Spend:{" "}
                                 <Iconify icon="bi:currency-pound" />
-                                {elem?.spentmoney}+
+                                {elem?.spentmoney}+ */}
                               </Typography>
                             </Stack>
                           </Box>

@@ -104,7 +104,7 @@ const JobPostForm = ({
                   color="grey"
                   href="/dashboard/company/job_posted"
                 >
-                  Job Posted 12
+                  Job Posted
                 </Box>
                 <Typography color="text.primary">
                   {id === "create" ? "Add New Job" : "Edit Job"}

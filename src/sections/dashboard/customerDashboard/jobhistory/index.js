@@ -1,6 +1,7 @@
 import { useAuthContext } from "@/auth/useAuthContext";
 import { SelectBox, TextBox } from "@/components/form";
 import Iconify from "@/components/iconify/Iconify";
+import ViewInvoiceModal from "../../../../pages/Modals/Viewinvoicemodal";
 import TextMaxLine from "@/components/text-max-line";
 import SkeletonLoader from "@/components/skeleton";
 import DashboardCard from "@/module/dashboard/customerCard/dashboardCard";
@@ -32,6 +33,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import CountUp from "react-countup";
 
+import axiosInstance from "@/utils/axios";
 const JobHistory = ({ formik }) => {
   const router = useRouter();
   const { user } = useAuthContext();
@@ -49,6 +51,13 @@ const JobHistory = ({ formik }) => {
     dispatch(setJobHistoryPage(value));
   };
 
+  const [invoiceDetails, setInvoiceDetails] = useState('');
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
+
   React.useEffect(() => {
     dispatch(
       getJobHistory({
@@ -62,6 +71,17 @@ const JobHistory = ({ formik }) => {
     );
   }, [page, pageSize, date, search]);
 
+  const handleClickShowInvoice = async (value ) => {
+    try {
+      const response = await axiosInstance.get(`/api/auth/invoice/view/${value}`);
+      if (response.status === 200) {
+        setInvoiceDetails(response.data);
+        openModal();
+      }
+    } catch (error) {
+      console.log("Error fetching invoice", error);
+    }
+  };
   return (
     <React.Fragment>
       <Box py={3} pb={12}>
@@ -177,7 +197,7 @@ const JobHistory = ({ formik }) => {
                               color="common.black"
                               fontSize={17}
                             >
-                              {elem?.description}
+                              {elem.name} 
                             </TextMaxLine>
                           </Box>
                         </Stack>
@@ -192,7 +212,7 @@ const JobHistory = ({ formik }) => {
                                   fontSize={28}
                                   fontWeight={500}
                                 >
-                                  {elem.name}
+                                  {elem?.description}
                                 </TextMaxLine>
                               </Box>
                               <Stack direction="row" spacing={2} mb={2}>
@@ -507,6 +527,16 @@ const JobHistory = ({ formik }) => {
                                   View Detail
                                 </Button>
                               </Box>
+                              <Box sx={{ my: 2 }}>
+                                <Button
+                                  sx={{ fontWeight: 500,color : '#000',border: '1px solid #000' }}
+                                  fullWidth
+                                  variant="outlined"
+                                  onClick={() => handleClickShowInvoice(elem.invoice_id)}
+                                >
+                                  View Invoice
+                                </Button>
+                              </Box>
                             </Grid>
                           </Grid>
                           <Divider sx={{ my: 2 }} />
@@ -534,9 +564,9 @@ const JobHistory = ({ formik }) => {
                                   alignItems: "flex-start",
                                 }}
                               >
-                                Customer Spend:{" "}
+                                {/* Customer Spend:{" "}
                                 <Iconify icon="bi:currency-pound" />
-                                {elem?.spentmoney}+
+                                {elem?.spentmoney}+ */}
                               </Typography>
                             </Stack>
                           </Box>
@@ -618,6 +648,13 @@ const JobHistory = ({ formik }) => {
             </Box>
           </Box>
         </Container>
+        {invoiceDetails && (
+        <ViewInvoiceModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          invoiceDetails={invoiceDetails}
+        />
+      )}
       </Box>
     </React.Fragment>
   );

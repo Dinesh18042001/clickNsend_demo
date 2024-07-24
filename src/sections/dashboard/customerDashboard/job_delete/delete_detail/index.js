@@ -328,16 +328,16 @@ const JobDeleteDetail = () => {
 
                   <Box my={3}>
                     <Box textAlign="right">
-                      <Button
+                      {/* <Button
                         variant="outlined"
                         onClick={() => setReviewOpen(true)}
                       >
                         + Add Rating
-                      </Button>
+                      </Button> */}
                     </Box>
                     <Box>
                       <Typography textAlign="center" variant="h4">
-                        Rating & Reviews
+                        Rating & Reviews .
                       </Typography>
                     </Box>
                   </Box>

@@ -1086,6 +1086,8 @@ import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import CountUp from "react-countup";
 import DashboardCard from "@/module/dashboard/driverCard/dashboardCard";
 import ApplyJobModal from "@/module/dashboard/driverCard/applyJob";
+import ApplyViewJob from "@/module/dashboard/driverCard/viewJob";
+import ApplyJobEditModal from "@/module/dashboard/driverCard/viewEditJob";
 import axiosInstance from "@/utils/axios";
 import SkeletonLoader from "@/components/skeleton";
 import { JobSekelton } from "@/components/not-found";
@@ -1131,6 +1133,26 @@ const DashboardJobRequest = () => {
   const [startOpen, setStartopen] = React.useState(false);
   const handleStartOpen = (id) => setStartopen(id);
   const handleStartClose = () => setStartopen(false);
+
+  const [applyOpenViewJob, setApplyOpenViewJob] = React.useState(false);
+  const [jobRequestDetails, setJobRequestDetails] = useState([]);
+
+  const handleOpenView = (amount,description) => {
+  setApplyOpenViewJob(true);
+  setJobRequestDetails({ requestAmount: amount,
+    requestDescription: description,})
+}
+
+const handleCloseViewJob = () => setApplyOpenViewJob(false);
+const [applyOpenEditJob, setApplyOpenEditJob] = React.useState(false);
+
+const handleOpenEditView = (amount,description,request_id) => {
+  setApplyOpenEditJob(true);
+setJobRequestDetails({ requestAmount: amount,
+  requestDescription: description,requestId: request_id});
+}
+const handleCloseEditJob = () => setApplyOpenEditJob(false);
+
   const handleOpen = (id) => setApplyopen(id);
   const handleClose = () => setApplyopen(false);
 
@@ -1210,7 +1232,7 @@ const DashboardJobRequest = () => {
           ) {
             setIsCheckedDocument(true);
           }
-          console.log("newData", newData);
+          console.log("isCheckedDocument", isCheckedDocument);
         }
       })
       .catch((error) => {
@@ -1342,7 +1364,7 @@ const DashboardJobRequest = () => {
                         <CountUp
                           start={0}
                           duration={1}
-                          end={data?.length}
+                          end={ isCheckedDocument ? data?.length : '0'}
                           enableScrollSpy={true}
                           scrollSpyDelay={200}
                         />
@@ -1353,7 +1375,7 @@ const DashboardJobRequest = () => {
               </Grid>
             )}
           </Box>
-
+          {isCheckedDocument ? (
           <Box py={2} sx={{ background: " " }}>
             <Grid container rowSpacing={0} justifyContent="center">
               {data && data?.length > 0 ? (
@@ -1363,9 +1385,17 @@ const DashboardJobRequest = () => {
                   let addressDetail =
                     item?.items && item?.items?.length > 0 && item?.items[0];
 
+                    let request_amount = 0
+                    let request_description = null
+                    let request_id;
+                    item.job_requests.forEach((jobRequest) => {
+              if (user.id === jobRequest.driver_id  ) {
+                request_amount = jobRequest.ammount
+                request_description = jobRequest.description || request_description;            
+                request_id= jobRequest.id || request_id;       
+              }});
                   return (
                     <React.Fragment key={index}>
-                      {!isCheckedDocument ? (
                         <Grid container rowSpacing={0}>
                           <Grid item md={12}>
                             <Card
@@ -1838,10 +1868,12 @@ const DashboardJobRequest = () => {
                                     <Typography
                                       variant="subtitle2"
                                       sx={{
+                                        fontSize: "15px",
+                                        fontWeight: "600",
                                         display: "flex",
                                         alignItems: "flex-start",
                                       }}
-                                    ></Typography>
+                                    >{request_amount > 0 &&" Bid Amount: " +request_amount}</Typography>
                                     <Stack direction="row" spacing={1}>
                                       {/* View Job Button */}
                                       <Box>
@@ -1861,6 +1893,38 @@ const DashboardJobRequest = () => {
                                           View Job
                                         </Button>
                                       </Box>
+                                      {some(item?.job_requests, {
+                                            driver_id: driverId,
+                                          })
+                                          && 
+                                      <Box>
+                                        <Button
+                                          fullWidth
+                                          variant="contained"
+                                          onClick={() => {handleOpenView( request_amount,request_description)}}
+                                          sx={{
+                                            fontWeight: 500,
+                                          }}
+                                        >
+                                         View Bid
+                                        </Button>
+                                      </Box>}
+                                      {some(item?.job_requests, {
+                                            driver_id: driverId,
+                                          })
+                                          && 
+                                      <Box>
+                                        <Button
+                                          fullWidth
+                                          variant="contained"
+                                          onClick={() => {handleOpenEditView( request_amount,request_description,request_id)}}
+                                          sx={{
+                                            fontWeight: 500,
+                                          }}
+                                        >
+                                         Edit Bid
+                                        </Button>
+                                      </Box>}
                                       {/* Apply Job Button */}
                                       <Box>
                                         <Button
@@ -1918,15 +1982,6 @@ const DashboardJobRequest = () => {
                             </Card>
                           </Grid>
                         </Grid>
-                      ) : (
-                        <Box>
-                          {/* because this is map multipal time so comm */}
-
-                          {/* <Typography variant="h4" textAlign="left">
-                            Please Fill all documents for apply jobs
-                          </Typography> */}
-                        </Box>
-                      )}
                     </React.Fragment>
                   );
                 })
@@ -1976,6 +2031,15 @@ const DashboardJobRequest = () => {
               </Stack>
             </Box>
           </Box>
+            ) : (
+                        <Box>
+                          {/* because this is map multipal time so comm */}
+
+                          <Typography variant="h4" textAlign="left">
+                            Please Fill all documents for apply jobs
+                          </Typography>
+                        </Box>
+                      )}
         </Container>
 
         <Box>
@@ -1984,6 +2048,20 @@ const DashboardJobRequest = () => {
             job_id={applyOpen}
             applyOpen={applyOpen}
             getData={getData}
+          />
+        </Box>
+        <Box>
+          <ApplyViewJob
+            handleCloseViewJob={handleCloseViewJob}
+            applyOpenViewJob={applyOpenViewJob}
+            jobRequestDetails={jobRequestDetails}
+          />
+        </Box>
+        <Box>
+          <ApplyJobEditModal
+            handleCloseEditJob={handleCloseEditJob}
+            applyOpenEditJob={applyOpenEditJob}
+            jobRequestDetails={jobRequestDetails}
           />
         </Box>
       </Box>
