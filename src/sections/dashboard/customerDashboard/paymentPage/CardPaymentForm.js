@@ -160,6 +160,7 @@ const CardPaymentForm = ({ paymentDetails, setShowPayment }) => {
             icon={false}
             severity="success"
           >
+            Driver account is not active Now !!
             {error.response.data.error}
           </Alert>,
           {

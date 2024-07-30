@@ -13,11 +13,11 @@ const PrimaryHomePage = () => {
     <React.Fragment>
       <NewBanner />
       <OurFleet />
-      <TotalDrivers />
-      <ForCard />
-      <HelpfulHome />
-      <Faqs/>
-      <Testimonials/>
+      {/* <TotalDrivers /> */}
+      {/* <ForCard /> */}
+      {/* <HelpfulHome /> */}
+      {/* <Faqs/> */}
+      {/* <Testimonials/> */}
       {/* <NewTestimonial /> */}
     </React.Fragment>
   );

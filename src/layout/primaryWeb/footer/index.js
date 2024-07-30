@@ -25,7 +25,7 @@ const Footer = () => {
             </Grid>{" "}
           </Grid>{" "}
         </Box>
-        <CardContent  sx={{ position: "relative", paddingTop: "340px"  }}>
+        <CardContent  sx={{ position: "relative", paddingTop: "200px"  }}>
           <Grid
             container
             spacing={{ lg: 0, md: 0, sm: 2, xs: 2 }}
@@ -34,9 +34,9 @@ const Footer = () => {
             <Grid item lg={3} md={3} sm={12} xs={12}>
               <Box
                 component="img"
-                width={186}
-                height={57}
-                src="/logo.png"
+                width={200}
+                height={100}
+                src="/faviconweb.png"
                 alt="Logo"
                 loading="lazy"
                 sx={{
