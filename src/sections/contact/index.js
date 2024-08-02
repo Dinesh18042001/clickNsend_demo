@@ -55,7 +55,7 @@ const ContactSection = ({ formik }) => {
             height: "100%",
           }}
         >
-          <Container sx={{ width: "100%", height: "100%" }}>
+          {/* <Container sx={{ width: "100%", height: "100%" }}>
             <Grid container sx={{ width: "100%", height: "100%" }}>
               <Grid item md={8}></Grid>
               <Grid
@@ -64,10 +64,10 @@ const ContactSection = ({ formik }) => {
                 sx={{ background: (theme) => theme.palette.common.black }}
               ></Grid>
             </Grid>
-          </Container>
+          </Container> */}
         </Box>
         <Container>
-          <Box sx={{ mb: 6 }}>
+          <Box sx={{ mb: 12 }}>
             <Breadcrumbs aria-label="breadcrumb">
               <Box
                 component={Link}
@@ -83,7 +83,7 @@ const ContactSection = ({ formik }) => {
             </Breadcrumbs>
           </Box>
           <Grid container spacing={10} pb={12}>
-            <Grid item md={6}>
+            <Grid item md={12}>
               <Box sx={{ mb: 4 }}>
                 <Typography
                   component="h4"
@@ -210,9 +210,9 @@ const ContactSection = ({ formik }) => {
                 )}
               </Box>
             </Grid>
-            <Grid  item md={6}>
+            {/* <Grid  item md={6}>
               <ContactMap />
-            </Grid>
+            </Grid> */}
           </Grid>
         </Container>
       </Box>

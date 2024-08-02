@@ -25,7 +25,7 @@ const Footer = () => {
             </Grid>{" "}
           </Grid>{" "}
         </Box>
-        <CardContent  sx={{ position: "relative", paddingTop: "200px"  }}>
+        <CardContent  sx={{ position: "relative", paddingTop: "400px"  }}>
           <Grid
             container
             spacing={{ lg: 0, md: 0, sm: 2, xs: 2 }}
